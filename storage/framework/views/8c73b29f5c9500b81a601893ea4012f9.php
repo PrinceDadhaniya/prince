@@ -468,36 +468,29 @@
     
     <div class="container">
         <h2 class="text-center mt-4 text-dark">Authorized Brands</h2>
-        <div class="brands-slider mt-3">
-            <div class="brands-track d-flex">
+        <div class="brands-slider mt-3" id="brandsSlider">
+            <div class="brands-track" id="brandsTrack">
                 <?php $__currentLoopData = $brand; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="category-item text-center">
+                    <div class="category-item">
                         <div class="icon-container">
-                            <a href="#">
-                                <img src="<?php echo e(asset($b->image)); ?>" alt="<?php echo e($b->name); ?>"
-                                    class="img-fluid rounded-circle mx-2 brand-logo">
+                            <a href="<?php echo e(route('subcategory', ['category_id' => $cat->id])); ?>">
+
+                                <img src="<?php echo e(asset($b->image)); ?>" alt="<?php echo e($b->name); ?>" class="brand-logo">
                             </a>
                         </div>
-                        <h5 class="mt-3 brand-name">
-                            <?php echo e($b->name); ?>
-
-                        </h5>
+                        <h5 class="brand-name"><?php echo e($b->name); ?></h5>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 
                 <?php $__currentLoopData = $brand; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="category-item text-center">
+                    <div class="category-item">
                         <div class="icon-container">
                             <a href="#">
-                                <img src="<?php echo e(asset($b->image)); ?>" alt="<?php echo e($b->name); ?>"
-                                    class="img-fluid rounded-circle mx-2 brand-logo">
+                                <img src="<?php echo e(asset($b->image)); ?>" alt="<?php echo e($b->name); ?>" class="brand-logo">
                             </a>
                         </div>
-                        <h5 class="mt-3 brand-name">
-                            <?php echo e($b->name); ?>
-
-                        </h5>
+                        <h5 class="brand-name"><?php echo e($b->name); ?></h5>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
@@ -577,6 +570,59 @@
             }
         }
     </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slider = document.getElementById("brandsSlider");
+
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener("mousedown", (e) => {
+                isDown = true;
+                slider.classList.add("active");
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener("mouseleave", () => {
+                isDown = false;
+                slider.classList.remove("active");
+            });
+
+            slider.addEventListener("mouseup", () => {
+                isDown = false;
+                slider.classList.remove("active");
+            });
+
+            slider.addEventListener("mousemove", (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            // Mobile Touch Support
+            slider.addEventListener("touchstart", (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener("touchend", () => {
+                isDown = false;
+            });
+
+            slider.addEventListener("touchmove", (e) => {
+                if (!isDown) return;
+                const x = e.touches[0].pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Product;
 use App\Models\Document;
+use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -45,5 +46,12 @@ class DocumentController extends Controller
     {
         $document->delete();
         return response()->json(null, 204);
+    }
+
+    public function create()
+    {
+        $nextSerialNumber = DocumentType::max('serial_number') + 1;
+        $documentType = new DocumentType(); // Define the variable
+        return view('admin.documents.create', compact('nextSerialNumber', 'documentType'));
     }
 }

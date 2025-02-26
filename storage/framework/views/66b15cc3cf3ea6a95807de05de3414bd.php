@@ -91,10 +91,19 @@
 
 
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                                data-feather="airplay"></i><span>Documents Brands</span></a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="<?php echo e(route('admin.document-brands.create')); ?>">Add Document Brand</a></li>
+                            <li><a href="<?php echo e(route('admin.document-brands.index')); ?>">View Document Brand</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
                             data-feather="airplay"></i><span>Documents Category</span></a>
                         <ul class="sidebar-submenu">
-                            <li><a href="<?php echo e(url('admin/document-category/create')); ?>">Add Document Category</a></li>
-                            <li><a href="<?php echo e(url('admin/document-category')); ?>">View Document Category</a></li>
+                            <li><a href="<?php echo e(route('admin.document-category.create')); ?>">Add Document Category</a></li>
+                            <li><a href="<?php echo e(route('admin.document-category.index')); ?>">View Document Category</a></li>
                         </ul>
                     </li>
 
@@ -130,10 +139,10 @@
 
 
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                                data-feather="airplay"></i><span>Documents</span></a>
+                                data-feather="airplay"></i><span>Documents Sections</span></a>
                         <ul class="sidebar-submenu">
-                            <li><a href="<?php echo e(url('admin/main-documents/create')); ?>">Document-Add</a></li>
-                            <li><a href="<?php echo e(url('admin/main-documents')); ?>">Document-View</a></li>
+                            <li><a href="<?php echo e(route('admin.documents-sections.create')); ?>">Document-Add</a></li>
+                            <li><a href="<?php echo e(route('admin.documents-sections.index')); ?>">Document-View</a></li>
                         </ul>
                     </li>
 

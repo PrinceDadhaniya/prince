@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MainDocument;
 use App\Models\Product;
+use App\Models\MainDocument;
 use Illuminate\Http\Request;
 
 class MainDocumentController extends Controller
@@ -12,10 +12,9 @@ class MainDocumentController extends Controller
      * Display a listing of the documents.
      */
 
-     public function create()
+    public function create()
     {
-        $products = \App\Models\Product::all(); // Fetch all products
-        return view('admin.document.create', compact('products'));
+        return view('admin.documents.create'); // Ensure this view exists
     }
 
     public function edit($id)
@@ -36,24 +35,23 @@ class MainDocumentController extends Controller
      * Store a newly created document in storage.
      */
     public function store(Request $request)
-{
-    // Validate the form inputs
-    $validatedData = $request->validate([
-        'product_id' => 'required|exists:products,id', // This is fine, as product_id needs to exist in the products table
-        'type' => 'required|string', // Ensure type is a valid string
-        'title' => 'nullable|string', // Title is optional, but if provided, it must be a string
-        'description' => 'nullable|string', // Description is optional, but if provided, it must be a string
-        'file_path' => 'required|string', // Make sure file_path is a string (URL or file path)
-    ]);
+    {
+        // Validate the form inputs
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id', // This is fine, as product_id needs to exist in the products table
+            'type' => 'required|string', // Ensure type is a valid string
+            'title' => 'nullable|string', // Title is optional, but if provided, it must be a string
+            'description' => 'nullable|string', // Description is optional, but if provided, it must be a string
+            'file_path' => 'required|string', // Make sure file_path is a string (URL or file path)
+        ]);
 
-    // Create the new document with the validated data
-    $document = MainDocument::create($validatedData);
+        // Create the new document with the validated data
+        $document = MainDocument::create($validatedData);
 
-    // Redirect to the document creation page with a success message
-    return redirect()->route('main-documents.index')
-        ->with('success', 'Document added successfully!');
-}
-
+        // Redirect to the document creation page with a success message
+        return redirect()->route('main-documents.index')
+            ->with('success', 'Document added successfully!');
+    }
 
     /**
      * Display the specified document.

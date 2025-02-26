@@ -5,7 +5,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-6">
-                <h3>Categories</h3>
+                <h3>Document Category</h3>
             </div>
             <div class="col-6">
                 <ol class="breadcrumb">
@@ -17,8 +17,8 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="breadcrumb-item">Category</li>
-                    <li class="breadcrumb-item active">Category Index</li>
+                    <li class="breadcrumb-item">Document Category</li>
+                    <li class="breadcrumb-item active">Document Category Index</li>
                 </ol>
             </div>
         </div>
@@ -27,36 +27,58 @@
 
 <div class="row">
     <div class="col-md-12">
-
         @if(session('message'))
             <div class="alert alert-success mb-3">{{ session('message') }}</div>
         @endif
-
         <div class="card">
             <div class="card-header">
-                <h3>Categories List
-                    <a href="{{ route('admin.categories.create') }}" class="btn btn-primary btn-sm text-white float-end">Add Category</a>
+                <h3>Document Categories List
+                    <a href="{{ route('admin.document-category.create') }}" class="btn btn-primary btn-sm text-white float-end">Add Category</a>
                 </h3>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Category Name</th>
-                            <th>Parent Category</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($categories as $category)
-                            @include('admin.document-category.category_item', ['category' => $category, 'level' => 0])
-                        @endforeach
-                    </tbody>
-                </table>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (isset($categories) && $categories->count() > 0)
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Document Category Name</th>
+                                <th>Parent Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($categories as $category)
+                                <tr>
+                                    <td>{{ $category->id }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->parent ? $category->parent->name : 'None' }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.document-category.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        <form action="{{ route('admin.document-category.destroy', $category->id) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="alert alert-warning">No categories found.</div>
+                @endif
             </div>
         </div>
     </div>
 </div>
-
 @endsection

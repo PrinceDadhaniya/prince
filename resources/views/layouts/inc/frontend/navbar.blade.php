@@ -21,9 +21,12 @@
         <div class="d-flex flex-grow-1 justify-content-center px-3">
             <form class="d-flex w-100" role="search">
                 <input class="form-control mt-3 w-100" type="search" placeholder="Search" aria-label="Search"
-                    style="height: 45px;">
+                    style="height: 45px;" id="search-input">
                 <span class="material-icons mt-4" style="font-size: 28px;;">search</span>
             </form>
+            <div id="search-suggestions" class="list-group">
+                <!-- Search suggestions will be displayed here -->
+            </div>
         </div>
 
         <!-- Admin, Download Button, and Dropdown (Right Side) -->
@@ -149,6 +152,36 @@
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const searchSuggestions = document.getElementById('search-suggestions');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value;
+
+            if (query.length > 0) {
+                fetch(`/search?q=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchSuggestions.innerHTML = ''; // Clear previous suggestions
+                        if (data.length > 0) {
+                            data.forEach(product => {
+                                const suggestion = document.createElement('a');
+                                suggestion.href = `/product/${product.id}`;
+                                suggestion.classList.add('list-group-item', 'list-group-item-action');
+                                suggestion.textContent = product.name;
+                                searchSuggestions.appendChild(suggestion);
+                            });
+                        } else {
+                            searchSuggestions.innerHTML = '<span class="list-group-item">No results found</span>';
+                        }
+                    });
+            } else {
+                searchSuggestions.innerHTML = ''; // Clear suggestions when input is empty
+            }
+        });
+    });
+
     let categoryPath = ['Products & Services']; // Starting category
 
     async function initializeCategories() {
@@ -335,6 +368,16 @@
     }
 </script>
 <style>
+    #search-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: .25rem;
+        z-index: 1000;
+    }
 
     .navbar {
         background-color:#2561a8;

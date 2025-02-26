@@ -19,7 +19,7 @@
 <?php endif; ?>
 
 
-<!-- resources/views/admin/category/partials/category_option.blade.php -->
+
 
 <!-- Display the category itself -->
 <!-- resources/views/admin/category/partials/category_option.blade.php -->

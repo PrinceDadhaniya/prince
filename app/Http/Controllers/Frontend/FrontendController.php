@@ -43,10 +43,20 @@ class FrontendController extends Controller
     {
         return response()->json($category->children()->with('children')->get());
     }
+    // public function download()
+    // {
+    //     $categories = Category::whereNull('parent_id')->get();
+    //     // $brands = Brand::all();
+    //     $documents = Document::all(); // Fetch all documents
+
+    //     return view('frontend.pages.download', compact('categories', 'documents'));
+    // }
+
+
     public function download()
     {
         $categories = Category::whereNull('parent_id')->get();
-        // $brands = Brand::all();
+        $brands = Brand::all();
         $documents = Document::all(); // Fetch all documents
 
         return view('frontend.pages.download', compact('categories', 'documents'));

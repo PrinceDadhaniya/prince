@@ -6,11 +6,9 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 use App\Models\DocumentCategory;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryFormRequest;
-use App\Http\Controllers\Admin\DocumentCategoryController;
+use App\Http\Requests\DocumentCategoryFormRequest;
 
 class DocumentCategoryController extends Controller
 {
@@ -60,60 +58,90 @@ class DocumentCategoryController extends Controller
 
     public function index()
     {
-        $parentCategories = DocumentCategory::with('children')->whereNull('parent_id')->get();
-        return view('admin.document-category.index', compact('parentCategories'));
+        $categories = DocumentCategory::all();
+        return view('admin.document-category.index', compact('categories'));
     }
 
     public function show($id)
     {
-
-        $category = DocumentCategory::findOrFail($id);  // Change this line to find by ID
+        $category = DocumentCategory::find($id);
+        if (!$category) {
+            return redirect()->route('admin.document-category.index')->with('error', 'Category not found');
+        }
         return view('admin.document-category.show', compact('category'));
     }
 
     public function create()
     {
-
-        $parentCategories = DocumentCategory::with('children')->whereNull('parent_id')->get();
+        $parentCategories = DocumentCategory::whereNull('parent_id')->get();
         return view('admin.document-category.create', compact('parentCategories'));
     }
 
-    public function store(DocumentCategoryFormRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:document_categories',
+            'description' => 'nullable|string',
+            'serial_number' => 'nullable|integer',
+            'parent_id' => 'nullable|exists:document_categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-        $category = new DocumentCategory;
-        $category->name = $validated['name'];
-        $category->slug = Str::slug($validated['slug']);
-        $category->parent_id = $validated['parent_id'];
-        $category->serial_number = $validated['serial_number'] ?? null;
-        $category->description = $validated['description']; // Fix: Ensure description is assigned
+        $category = new DocumentCategory($request->all());
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $ext;
-            $path = public_path('uploads/category');
-            if (!file_exists($path)) {
-                mkdir($path, 0755, true); // Create the directory if it doesn't exist
-            }
-            $file->move($path, $filename);
-            $category->image = $filename;
+            $imagePath = $request->file('image')->store('document_categories', 'public');
+            $category->image = $imagePath;
         }
 
         $category->save();
-        return redirect()->route('admin.categories.index')->with('message', 'Category added successfully!');
+
+        return redirect()->route('admin.document-category.index')->with('message', 'Document Category created successfully.');
     }
+
+
+    // public function store(DocumentCategoryFormRequest $request)
+    // {
+    //     $validatedData = $request->validated();
+
+    //     $category = new DocumentCategory;
+    //     $category->name = $validatedData['name'];
+    //     $category->slug = Str::slug($validatedData['slug']);
+    //     $category->parent_id = $validatedData['parent_id'];
+    //     $category->serial_number = $validatedData['serial_number'] ?? null;
+    //     $category->description = $validatedData['description']; // Fix: Ensure description is assigned
+
+    //     if ($request->hasFile('image')) {
+    //         $file = $request->file('image');
+    //         $ext = $file->getClientOriginalExtension();
+    //         $filename = time() . '.' . $ext;
+    //         $path = public_path('uploads/category');
+    //         if (!file_exists($path)) {
+    //             mkdir($path, 0755, true); // Create the directory if it doesn't exist
+    //         }
+    //         $file->move($path, $filename);
+    //         $category->image = $filename;
+    //     }
+
+    //     $category->save();
+    //     return redirect()->route('admin.document-category.index')->with('message', 'Document Category created successfully.');
+    // }
+
+
 
     // Show the category editing form
     public function edit(DocumentCategory $category)
     {
+        if (!$category) {
+            return redirect()->route('admin.document-category.index')->with('error', 'Category not found');
+        }
         // Retrieve the parent categories, including their children
         $parentCategories = DocumentCategory::with('children')->whereNull('parent_id')->get();
 
         if ($parentCategories->isEmpty()) {
             // Handle case where no parent categories are found
-            return redirect()->route('admin.categories.index')->with('error', 'No parent categories found.');
+            return redirect()->route('admin.document-categories.index')->with('error', 'No parent categories found.');
         }
 
         // Return the edit view with the category and parentCategories data
@@ -121,15 +149,18 @@ class DocumentCategoryController extends Controller
     }
 
     // Update an existing category
-    public function update(Request $request, Category $category)
+    public function update(Request $request, DocumentCategory $category)
     {
+        if (!$category) {
+            return redirect()->route('admin.document-category.index')->with('error', 'Category not found');
+        }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'description' => 'required|string',
-            'serial_number' => 'required|unique:categories,serial_number,' . $category->id,
+            'serial_number' => 'required|unique:document_categories,serial_number,' . $category->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,avif|max:2048',
-            'parent_id' => 'nullable|exists:categories,id',
+            'parent_id' => 'nullable|exists:document_categories,id',
         ]);
 
         $category->name = $validatedData['name'];
@@ -163,6 +194,9 @@ class DocumentCategoryController extends Controller
     // Delete a category
     public function destroy(DocumentCategory $category)
     {
+        if (!$category) {
+            return redirect()->route('admin.document-category.index')->with('error', 'Category not found');
+        }
         // Delete category image if exists
         if ($category->image && file_exists(public_path('uploads/category/' . $category->image))) {
             unlink(public_path('uploads/category/' . $category->image));
@@ -172,13 +206,9 @@ class DocumentCategoryController extends Controller
         $category->delete();
 
         // Redirect with success message
-        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('admin.document-category.index')->with('success', 'Document Category deleted successfully.');
     }
 
-
-
-
-    // NEW
     // In your controller (e.g., CategoryController.php)
     public function filter(Request $request)
     {

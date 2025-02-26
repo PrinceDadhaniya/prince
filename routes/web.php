@@ -13,16 +13,20 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\MainDocumentController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryController; // Ensure this import is correct
 use App\Http\Controllers\admin\DocumentController;
 use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MiniSliderController;
-use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\DocumentsSectionsController;
+use App\Http\Controllers\Frontend\FrontendController; // Add this import
+use App\Http\Controllers\Admin\SecondSliderController; // Correct the import
+use App\Http\Controllers\Admin\DocumentBrandController; // Add this import
+// use App\Http\Controllers\Admin\DocumentCategoryController;
 
 Auth::routes();
-use App\Http\Controllers\Admin\SecondSliderController;
+use App\Http\Controllers\Admin\DocumentCategoryController;
 
 Route::get('/products', Products::class);
 
@@ -93,20 +97,38 @@ Route::get('admin/products/subcategories/{categoryId}', [ProductController::clas
 
 // <------------------------------------------Admin Middleware and Controllers-------------------------------------------------->//
 
+// Route::prefix('admin')->middleware([RoleMiddleware::class])->group(function () {
+//     Route::get('/main-documents', [MainDocumentController::class, 'index'])->name('main-documents.index');  // To display the list or form
+//     Route::get('/main-documents/create', [MainDocumentController::class, 'create'])->name('main-documents.create'); // For creating a new document form
+//     Route::post('/main-documents', [MainDocumentController::class, 'store'])->name('main-documents.store');  // For storing the new document
+//     Route::get('/main-documents/edit/{id}', [MainDocumentController::class, 'edit'])->name('main-documents.edit');
+//     Route::put('/main-documents/update/{id}', [MainDocumentController::class, 'update'])->name('main-documents.update');
+//     Route::delete('/main-documents/{id}', [MainDocumentController::class, 'destroy'])->name('admin.main-documents.destroy');
+
+//     // Route::put('/main-documents/update/{id}', [MainDocumentController::class, 'update'])->name('main-documents.update');
+
+//     Route::get('document-types', [DocumentTypeController::class, 'index'])->name('admin.document-types.index');
+
+// });
+
+
 Route::prefix('admin')->middleware([RoleMiddleware::class])->group(function () {
-    Route::get('/main-documents', [MainDocumentController::class, 'index'])->name('main-documents.index');  // To display the list or form
-    Route::get('/main-documents/create', [MainDocumentController::class, 'create'])->name('main-documents.create'); // For creating a new document form
-    Route::post('/main-documents', [MainDocumentController::class, 'store'])->name('main-documents.store');  // For storing the new document
-    Route::get('/main-documents/edit/{id}', [MainDocumentController::class, 'edit'])->name('main-documents.edit');
-    Route::put('/main-documents/update/{id}', [MainDocumentController::class, 'update'])->name('main-documents.update');
-    Route::delete('/main-documents/{id}', [MainDocumentController::class, 'destroy'])->name('admin.main-documents.destroy');
-
-    // Route::put('/main-documents/update/{id}', [MainDocumentController::class, 'update'])->name('main-documents.update');
-
-    Route::get('document-types', [DocumentTypeController::class, 'index'])->name('admin.document-types.index');
-
+    Route::get('/documents', [MainDocumentController::class, 'index'])->name('documents.index');  // To display the list or form
+    Route::get('/documents/create', [MainDocumentController::class, 'create'])->name('admin.documents.create'); // For creating a new document form
+    Route::post('/documents', [MainDocumentController::class, 'store'])->name('admin.documents.store');  // For storing the new document
+    Route::get('/documents/edit/{id}', [MainDocumentController::class, 'edit'])->name('documents.edit');
+    Route::put('/documents/update/{id}', [MainDocumentController::class, 'update'])->name('documents.update');
+    Route::delete('documents/{id}', [MainDocumentController::class, 'destroy'])->name('admin.documents.destroy');
 });
 
+Route::prefix('admin')->middleware([RoleMiddleware::class])->group(function () {
+    Route::get('/documents', [MainDocumentController::class, 'index'])->name('admin.documents.index');  // To display the list or form
+    Route::get('/documents/create', [MainDocumentController::class, 'create'])->name('admin.documents.create'); // For creating a new document form
+    Route::post('/documents', [MainDocumentController::class, 'store'])->name('admin.documents.store');  // For storing the new document
+    Route::get('/documents/edit/{id}', [MainDocumentController::class, 'edit'])->name('admin.documents.edit');
+    Route::put('/documents/update/{id}', [MainDocumentController::class, 'update'])->name('admin.documents.update');
+    Route::delete('/documents/{id}', [MainDocumentController::class, 'destroy'])->name('admin.documents.destroy');
+});
 
 Route::prefix('admin')->middleware([RoleMiddleware::class])->group(function () {
 
@@ -239,3 +261,75 @@ Route::resource('document-types', DocumentTypeController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('documents-type', DocumentTypeController::class);
 });
+
+
+
+//<---------------------------------------Document Category Controllers -------------------------------------------------------->//
+
+Route::controller(DocumentCategoryController::class)->prefix('admin/document-category')->group(function () {
+    Route::get('/', 'index')->name('admin.document-category.index');
+    Route::get('/create', 'create')->name('admin.document-category.create');
+    Route::post('/', 'store')->name('admin.document-category.store'); // Ensure this route is defined
+    Route::get('/{category}/edit', 'edit')->name('admin.document-category.edit');
+    Route::put('/{category}', 'update')->name('admin.document-category.update');
+    Route::delete('/{category}', 'destroy')->name('admin.document-category.destroy');
+});
+
+Route::get('admin/document-category', [DocumentCategoryController::class, 'index'])->name('admin.document-category.index');
+
+Route::prefix('admin')->middleware([RoleMiddleware::class])->group(function () {
+    Route::controller(DocumentBrandController::class)->prefix('document-brands')->group(function () {
+        Route::get('/', 'index')->name('admin.document-brands.index');
+        Route::get('/create', 'create')->name('admin.document-brands.create');
+        Route::post('/', 'store')->name('admin.document-brands.store');
+        Route::get('/{id}/edit', 'edit')->name('admin.document-brands.edit');
+        Route::put('/{id}', 'update')->name('admin.document-brand.update');
+        Route::delete('/{id}', 'destroy')->name('admin.document-brands.destroy');
+        Route::post('/admin/document-brands/save/{id?}', [DocumentBrandController::class, 'save'])->name('admin.document-brands.save');
+    });
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('document-brands', DocumentBrandController::class);
+    Route::resource('document-brand', DocumentBrandController::class);
+});
+
+Route::get('admin/main-documents/create', [DocumentController::class, 'create'])->name('main-documents.create');
+
+Route::prefix('admin')->middleware([RoleMiddleware::class])->group(function () {
+    Route::controller(DocumentCategoryController::class)->prefix('document-category')->group(function () {
+        Route::get('/', 'index')->name('admin.document-category.index');
+        Route::get('/create', 'create')->name('admin.document-category.create');
+        Route::post('/', 'store')->name('admin.document-category.store');
+        Route::get('/{category}/edit', 'edit')->name('admin.document-category.edit');
+        Route::put('/{category}', 'update')->name('admin.document-category.update');
+        Route::delete('/{category}', 'destroy')->name('admin.document-category.destroy');
+    });
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('main-documents', DocumentCategoryController::class);
+    Route::resource('document-category', App\Http\Controllers\Admin\DocumentCategoryController::class);
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('documents-sections', DocumentsSectionsController::class);
+});
+
+Route::resource('admin/main-documents', DocumentsSectionsController::class);
+
+Route::get('admin/documents-sections/create', [DocumentsSectionsController::class, 'create'])->name('admin.documents-sections.create');
+
+Route::get('/admin/document-sections/create', [DocumentsSectionsController::class, 'create'])->name('admin.document-sections.create');
+Route::post('/admin/document-sections/store', [DocumentsSectionsController::class, 'store'])->name('admin.document-sections.store');
+
+
+
+
+// Downloads
+Route::get('/download', [DownloadController::class, 'downloadPage'])->name('download.page');
+Route::get('/fetch-subcategories', [DownloadController::class, 'fetchSubcategories'])->name('fetch.subcategories');
+Route::get('/filter-documents', [DownloadController::class, 'filterDocuments'])->name('filter.documents');
+
+
+Route::get('/search', [SearchController::class, 'search']);
