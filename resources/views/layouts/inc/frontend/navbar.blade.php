@@ -21,7 +21,7 @@
         <div class="d-flex flex-grow-1 justify-content-center px-3">
             <form class="d-flex w-100" role="search">
                 <input class="form-control mt-3 w-100" type="search" placeholder="Search" aria-label="Search"
-                    style="height: 45px;" id="search-input">
+                    style="height: 45px;" id="search-input" autocomplete="off">
                 <span class="material-icons mt-4" style="font-size: 28px;;">search</span>
             </form>
             <div id="search-suggestions" class="list-group">
@@ -151,6 +151,7 @@
     </div>
 </div>
 
+<script src="{{ asset('assets/js/search-suggestions.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-input');
@@ -158,11 +159,13 @@
 
         searchInput.addEventListener('input', function() {
             const query = this.value;
+            console.log('Search query:', query); // Debug log
 
             if (query.length > 0) {
-                fetch(`/search?q=${query}`)
+                fetch(`/api/search?q=${query}`)
                     .then(response => response.json())
                     .then(data => {
+                        console.log('Search results:', data); // Debug log
                         searchSuggestions.innerHTML = ''; // Clear previous suggestions
                         if (data.length > 0) {
                             data.forEach(product => {
@@ -175,6 +178,9 @@
                         } else {
                             searchSuggestions.innerHTML = '<span class="list-group-item">No results found</span>';
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching search results:', error); // Debug log
                     });
             } else {
                 searchSuggestions.innerHTML = ''; // Clear suggestions when input is empty

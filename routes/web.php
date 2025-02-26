@@ -7,23 +7,24 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\MainDocumentController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\CategoryController; // Ensure this import is correct
+use App\Http\Controllers\Admin\ProductController; // Ensure this import is correct
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\DocumentController;
 use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MiniSliderController;
-use App\Http\Controllers\DocumentsSectionsController;
-use App\Http\Controllers\Frontend\FrontendController; // Add this import
-use App\Http\Controllers\Admin\SecondSliderController; // Correct the import
-use App\Http\Controllers\Admin\DocumentBrandController; // Add this import
+use App\Http\Controllers\DocumentsSectionsController; // Add this import
+use App\Http\Controllers\Frontend\FrontendController; // Correct the import
+use App\Http\Controllers\Admin\SecondSliderController; // Add this import
 // use App\Http\Controllers\Admin\DocumentCategoryController;
+use App\Http\Controllers\Admin\DocumentBrandController; // Add this line
 
 Auth::routes();
 use App\Http\Controllers\Admin\DocumentCategoryController;
@@ -332,4 +333,6 @@ Route::get('/fetch-subcategories', [DownloadController::class, 'fetchSubcategori
 Route::get('/filter-documents', [DownloadController::class, 'filterDocuments'])->name('filter.documents');
 
 
-Route::get('/search', [SearchController::class, 'search']);
+// Route::get('/search', [SearchController::class, 'search']);
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
