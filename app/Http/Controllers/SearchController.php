@@ -11,9 +11,7 @@ class SearchController extends Controller
     {
         $query = $request->input('q');
 
-        $products = Product::where('name', 'like', "%$query%")
-            ->orWhere('description', 'like', "%$query%")
-            ->get();
+        $products = Product::where('name', 'LIKE', '%' . $query . '%')->get();
 
         return response()->json($products);
     }
