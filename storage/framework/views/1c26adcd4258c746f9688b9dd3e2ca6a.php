@@ -27,8 +27,16 @@
 
     </div>
 <?php endif; ?>
-    
-    
+
+<?php if($errors->any()): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>
+<?php endif; ?>
 
     <div class="container-fluid">
         <div class="row">
@@ -46,14 +54,10 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Product_id</th>
-                                        <th>type</th>
-                                        <th>title</th>
-                                        <th>File-Path</th>
-                                        <th>description</th>
-                                        <th>Category</th>
-                                        <th>Brand</th>
-                                        <th>Created At</th>
+                                        <th>Document Name</th>
+                                        <th>Document Type</th>
+                                        <th>Document Category</th>
+                                        <th>Document Brand</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -61,42 +65,26 @@
                                     <?php $__currentLoopData = $documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
                                             <td><?php echo e($document->id); ?></td>
-                                            <td><?php echo e($document->product ? $document->product->name : 'N/A'); ?></td>
-                                            <td><?php echo e($document->type); ?></td>
-                                            <td><?php echo e($document->title); ?></td>
-                                            <td><?php echo e($document->file_path); ?></td>
-                                            <td>
-                                                <p><?php echo e($document->description); ?></p>
-                                            </td>
+                                            <td><?php echo e($document->document_name); ?></td>
+                                            <td><?php echo e($document->document_type); ?></td>
                                             <td><?php echo e($document->category ? $document->category->name : 'N/A'); ?></td>
                                             <td><?php echo e($document->brand ? $document->brand->name : 'N/A'); ?></td>
-                                            <td><?php echo e($document->created_at); ?></td>
-
                                             <td>
                                                 <!-- Edit Button -->
-                                                <a href="<?php echo e(route('admin.documents-sections.edit', $document->id)); ?>" class="btn btn-success btn-sm">
-                                                  Edit
-                                              </a>
+                                                <a href="<?php echo e(route('admin.documents-sections.edit', $document->id)); ?>" class="btn btn-success btn-sm">Edit</a>
 
-
-                                                    <!-- Delete Button (Form Approach) -->
-                                                    <form
-                                                        action="
-                                                        <?php echo e(route('admin.documents-sections.destroy', $document->id)); ?>
-
-                                                         "
-                                                        method="POST" style="display: inline;"
-                                                        onsubmit="return confirm('Are you sure you want to delete this document?');">
-                                                        <?php echo csrf_field(); ?>
-                                                        <?php echo method_field('DELETE'); ?>
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            Delete
-                                                        </button>
-                                                    </form>
-
-
+                                                <!-- Delete Button (Form Approach) -->
+                                                <form
+                                                    action="<?php echo e(route('admin.documents-sections.destroy', $document->id)); ?>"
+                                                    method="POST" style="display: inline;"
+                                                    onsubmit="return confirm('Are you sure you want to delete this document?');">
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('DELETE'); ?>
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        Delete
+                                                    </button>
+                                                </form>
                                             </td>
-
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>

@@ -16,16 +16,12 @@ class CreateDocumentsSectionsTable extends Migration
         if (!Schema::hasTable('documents_sections')) {
             Schema::create('documents_sections', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
-                $table->unsignedBigInteger('product_id');
-                $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-                $table->foreignId('category_id')->constrained()->onDelete('cascade');
-                $table->string('type');
-                // $table->string('title')->nullable(); // Document title
-                $table->text('description')->nullable(); // Optional description
-                $table->string('file_path');
                 $table->string('document_name'); // New field
                 $table->string('document_type'); // New field
+                $table->string('document_category');
+                $table->string('document_brand');
+                $table->text('description')->nullable(); // Optional description
+                $table->string('file_path');
                 $table->timestamps();
             });
         }

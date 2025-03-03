@@ -20,7 +20,7 @@ use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MiniSliderController;
-use App\Http\Controllers\DocumentsSectionsController; // Add this import
+use App\Http\Controllers\Admin\DocumentsSectionsController; // Correct the import
 use App\Http\Controllers\Frontend\FrontendController; // Correct the import
 use App\Http\Controllers\Admin\SecondSliderController; // Add this import
 // use App\Http\Controllers\Admin\DocumentCategoryController;
@@ -62,6 +62,8 @@ Route::get('/subcategory/{category_id}', [FrontendController::class, 'show'])->n
 Route::get('/categories', [FrontendController::class, 'view'])->name('categories.index');
 Route::get('/category/{id}', [FrontendController::class, 'show'])->name('category.show');
 Route::get('/get-children/{categoryId}', [FrontendController::class, 'getChildren']);
+Route::get('/category/{category}', [DocumentController::class, 'showCategoryDocuments'])->name('category.documents');
+Route::get('/category/{category}/documents', [DocumentController::class, 'showCategoryDocuments'])->name('category.documents');
 
 // Add To Cart
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
@@ -267,13 +269,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 //<---------------------------------------Document Category Controllers -------------------------------------------------------->//
 
-Route::controller(DocumentCategoryController::class)->prefix('admin/document-category')->group(function () {
-    Route::get('/', 'index')->name('admin.document-category.index');
-    Route::get('/create', 'create')->name('admin.document-category.create');
-    Route::post('/', 'store')->name('admin.document-category.store'); // Ensure this route is defined
-    Route::get('/{category}/edit', 'edit')->name('admin.document-category.edit');
-    Route::put('/{category}', 'update')->name('admin.document-category.update');
-    Route::delete('/{category}', 'destroy')->name('admin.document-category.destroy');
+Route::controller(DocumentCategoryController::class)->prefix('admin/document-categories')->group(function () {
+    Route::get('/', 'index')->name('admin.document-categories.index');
+    Route::get('/create', 'create')->name('admin.document-categories.create');
+    Route::post('/', 'store')->name('admin.document-categories.store');
+    Route::get('/{category}/edit', 'edit')->name('admin.document-categories.edit');
+    Route::put('/{category}', 'update')->name('admin.document-categories.update');
+    Route::delete('/{category}', 'destroy')->name('admin.document-categories.destroy');
 });
 
 Route::get('admin/document-category', [DocumentCategoryController::class, 'index'])->name('admin.document-category.index');
@@ -324,6 +326,15 @@ Route::get('admin/documents-sections/create', [DocumentsSectionsController::clas
 Route::get('/admin/document-sections/create', [DocumentsSectionsController::class, 'create'])->name('admin.document-sections.create');
 Route::post('/admin/document-sections/store', [DocumentsSectionsController::class, 'store'])->name('admin.document-sections.store');
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('document-category', DocumentCategoryController::class);
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('document-categories', DocumentCategoryController::class);
+    Route::get('document-categories/{category}/edit', [DocumentCategoryController::class, 'edit'])->name('document-categories.edit');
+});
+
 
 
 
@@ -336,3 +347,8 @@ Route::get('/filter-documents', [DownloadController::class, 'filterDocuments'])-
 // Route::get('/search', [SearchController::class, 'search']);
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('documents-sections', DocumentsSectionsController::class);
+
+});

@@ -54,4 +54,13 @@ class DocumentController extends Controller
         $documentType = new DocumentType(); // Define the variable
         return view('admin.documents.create', compact('nextSerialNumber', 'documentType'));
     }
+
+    public function showCategoryDocuments($category)
+    {
+        $documents = Document::whereHas('product.category', function ($query) use ($category) {
+            $query->where('name', $category);
+        })->get();
+
+        return view('frontend.pages.category-documents', compact('category', 'documents'));
+    }
 }

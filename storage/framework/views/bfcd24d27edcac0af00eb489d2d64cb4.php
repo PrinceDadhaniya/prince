@@ -69,8 +69,10 @@
 
             <!-- Cart Icon with Badge -->
             <span class="position-relative">
-                <i class="fas fa-shopping-cart" style="font-size: 24px; color:#00000;" onclick="window.location.href='<?php echo e(url('/cart')); ?>'"></i>
-                <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                <i class="fas fa-shopping-cart" style="font-size: 24px; color:#00000;"
+                    onclick="window.location.href='<?php echo e(url('/cart')); ?>'"></i>
+                <span id="cart-badge"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
             </span>
 
         </div>
@@ -171,12 +173,14 @@
                             data.forEach(product => {
                                 const suggestion = document.createElement('a');
                                 suggestion.href = `/product/${product.id}`;
-                                suggestion.classList.add('list-group-item', 'list-group-item-action');
+                                suggestion.classList.add('list-group-item',
+                                    'list-group-item-action');
                                 suggestion.textContent = product.name;
                                 searchSuggestions.appendChild(suggestion);
                             });
                         } else {
-                            searchSuggestions.innerHTML = '<span class="list-group-item">No results found</span>';
+                            searchSuggestions.innerHTML =
+                                '<span class="list-group-item">No results found</span>';
                         }
                     })
                     .catch(error => {
@@ -386,7 +390,7 @@
     }
 
     .navbar {
-        background-color:#2561a8;
+        background-color: #2561a8;
     }
 
     #breadcrumb-p {

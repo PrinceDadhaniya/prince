@@ -3,7 +3,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Document;
+use App\Models\Document; // Add this line
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -56,10 +57,11 @@ class FrontendController extends Controller
     public function download()
     {
         $categories = Category::whereNull('parent_id')->get();
+        $subcategories = Subcategory::all(); // Add this line to fetch subcategories
         $brands = Brand::all();
         $documents = Document::all(); // Fetch all documents
 
-        return view('frontend.pages.download', compact('categories', 'documents'));
+        return view('frontend.pages.download', compact('categories', 'subcategories', 'brands', 'documents'));
     }
 
     public function products()

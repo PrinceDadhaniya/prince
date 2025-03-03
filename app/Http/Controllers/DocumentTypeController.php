@@ -147,4 +147,12 @@ class DocumentTypeController extends Controller
         $documentType = DocumentType::findOrFail($id); // Fetch the document type
         return view('admin.document-type.edit', compact('documentType'));
     }
+
+    public function destroy($id)
+    {
+        $documentType = DocumentType::findOrFail($id);
+        $documentType->delete();
+
+        return redirect()->route('admin.documents-type.index')->with('message', 'Document Type deleted successfully.');
+    }
 }

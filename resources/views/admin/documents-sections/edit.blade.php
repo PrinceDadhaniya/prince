@@ -77,7 +77,13 @@
 
             <div class="form-group">
                 <label for="category_id">Category</label>
-                <input type="text" name="category_id" class="form-control" id="category_id" value="{{ $document->category_id }}" required>
+                {{-- <input type="text" name="category_id" class="form-control" id="category_id" value="{{ $document->category_id }}" required> --}}
+                <select name="category_name" id="category_name" class="form-control" required>
+                    <option value="">Select Category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->name }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">

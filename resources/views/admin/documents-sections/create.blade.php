@@ -53,87 +53,62 @@
         <form action="{{ route('admin.documents-sections.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="document_name" class="form-label">Document Name</label>
+                <label for="document_name" class="form-label mt-2">Document Name</label>
                 <input type="text" class="form-control" id="document_name" name="document_name" required>
+                @error('document_name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="document mb-3" id="document-0">
-                <label for="documents[0][document_type]" class="form-label">Document Type</label>
-                <select name="documents[0][document_type]" class="form-control" required>
+                <label for="document_type" class="form-label">Document Type</label>
+                <select name="document_type" class="form-control" required>
                     <option value="Software">Software</option>
                     <option value="PDF">PDF</option>
                     <option value="Driver">Driver</option>
                 </select>
+                @error('document_type')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <!-- Category -->
-            {{-- <div class="form-group mb-4">
-                <label for="category_id">Category</label>
-                <select name="category_id" id="category_id" class="form-control" required>
+            <div class="form-group mb-3">
+                <label for="category_name">Document Category</label>
+                <select name="category_name" id="category_name" class="form-control" required>
                     <option value="">Select Category</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                        @if ($category->children)
-                            @foreach ($category->children as $childCategory)
-                                @include('admin.product.partials.category-options', [
-                                    'category' => $childCategory,
-                                    'level' => 1,
-                                ])
-                            @endforeach
-                        @endif
+                        <option value="{{ $category->name }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-            </div> --}}
-
-
-            <div class="form-group mb-4">
-                <label for="category_id">Category</label>
-                <input type="text" name="category_id" class="form-control" id="category_id" required>
+                @error('category_name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <!-- Brand -->
-            <div class="form-group mb-4">
-                <label for="brand_id">Brand</label>
-                <select name="brand_id" id="brand_id" class="form-control">
+            <div class="form-group mb-3">
+                <label for="brand_name">Document Brand</label>
+                <select name="brand_name" id="brand_name" class="form-control" required>
                     <option value="">Select Brand</option>
                     @foreach ($brands as $brand)
-                        <option value="{{ $brand->id }}"
-                            {{ old('brand_id', $product->brand_id ?? '') == $brand->id ? 'selected' : '' }}>
-                            {{ $brand->name }}
-                        </option>
+                        <option value="{{ $brand->name }}">{{ $brand->name }}</option>
                     @endforeach
                 </select>
+                @error('brand_name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-
-            {{-- <div class="form-group">
-                <label for="product_id">Product</label>
-                <input type="text" name="product_id" class="form-control" id="product_id" required>
-            </div> --}}
-
-            {{-- <div class="form-group">
-                <label for="type">Type</label>
-                <input type="text" name="type" class="form-control" id="type" required>
-            </div> --}}
-
-            {{-- <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" name="title" class="form-control" id="title">
-            </div> --}}
 
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" class="form-control" id="description"></textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label for="file_path">File Path</label>
                 <input type="text" name="file_path" class="form-control" id="file_path" required>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">Create</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-2 float-end">Create</button>
         </form>
     </div>
 @endsection

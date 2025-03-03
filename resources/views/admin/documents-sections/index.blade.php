@@ -28,10 +28,16 @@
         {{ session('success') }}
     </div>
 @endif
-    {{-- @foreach ($documents as $d)
-<a href="{{ $d->file_path }}" target="_blank">pdf</a>
-{{ $d->file_path }}  --}}
-    {{-- @endforeach --}}
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <div class="container-fluid">
         <div class="row">
@@ -49,14 +55,10 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Product_id</th>
-                                        <th>type</th>
-                                        <th>title</th>
-                                        <th>File-Path</th>
-                                        <th>description</th>
-                                        <th>Category</th>
-                                        <th>Brand</th>
-                                        <th>Created At</th>
+                                        <th>Document Name</th>
+                                        <th>Document Type</th>
+                                        <th>Document Category</th>
+                                        <th>Document Brand</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -64,41 +66,26 @@
                                     @foreach ($documents as $document)
                                         <tr>
                                             <td>{{ $document->id }}</td>
-                                            <td>{{ $document->product ? $document->product->name : 'N/A' }}</td>
-                                            <td>{{ $document->type }}</td>
-                                            <td>{{ $document->title }}</td>
-                                            <td>{{ $document->file_path }}</td>
-                                            <td>
-                                                <p>{{ $document->description }}</p>
-                                            </td>
+                                            <td>{{ $document->document_name }}</td>
+                                            <td>{{ $document->document_type }}</td>
                                             <td>{{ $document->category ? $document->category->name : 'N/A' }}</td>
                                             <td>{{ $document->brand ? $document->brand->name : 'N/A' }}</td>
-                                            <td>{{ $document->created_at }}</td>
-
                                             <td>
                                                 <!-- Edit Button -->
-                                                <a href="{{ route('admin.documents-sections.edit', $document->id) }}" class="btn btn-success btn-sm">
-                                                  Edit
-                                              </a>
+                                                <a href="{{ route('admin.documents-sections.edit', $document->id) }}" class="btn btn-success btn-sm">Edit</a>
 
-
-                                                    <!-- Delete Button (Form Approach) -->
-                                                    <form
-                                                        action="
-                                                        {{ route('admin.documents-sections.destroy', $document->id) }}
-                                                         "
-                                                        method="POST" style="display: inline;"
-                                                        onsubmit="return confirm('Are you sure you want to delete this document?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            Delete
-                                                        </button>
-                                                    </form>
-
-
+                                                <!-- Delete Button (Form Approach) -->
+                                                <form
+                                                    action="{{ route('admin.documents-sections.destroy', $document->id) }}"
+                                                    method="POST" style="display: inline;"
+                                                    onsubmit="return confirm('Are you sure you want to delete this document?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        Delete
+                                                    </button>
+                                                </form>
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>

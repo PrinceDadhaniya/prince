@@ -131,20 +131,10 @@ class DocumentCategoryController extends Controller
 
 
     // Show the category editing form
-    public function edit(DocumentCategory $category)
+    public function edit($id)
     {
-        if (!$category) {
-            return redirect()->route('admin.document-category.index')->with('error', 'Category not found');
-        }
-        // Retrieve the parent categories, including their children
-        $parentCategories = DocumentCategory::with('children')->whereNull('parent_id')->get();
-
-        if ($parentCategories->isEmpty()) {
-            // Handle case where no parent categories are found
-            return redirect()->route('admin.document-categories.index')->with('error', 'No parent categories found.');
-        }
-
-        // Return the edit view with the category and parentCategories data
+        $category = DocumentCategory::findOrFail($id);
+        $parentCategories = DocumentCategory::whereNull('parent_id')->get();
         return view('admin.document-category.edit', compact('category', 'parentCategories'));
     }
 

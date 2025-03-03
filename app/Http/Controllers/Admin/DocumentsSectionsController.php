@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\DocumentsSection;
+use App\Models\DocumentsSection; // Ensure this import is correct
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Admin\DocumentsSectionsController;
 
 class DocumentsSectionsController extends Controller
 {
@@ -27,16 +26,23 @@ class DocumentsSectionsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'nullable|exists:brands,id',
+            'document_name' => 'required|string|max:255', // New validation rule
+            'document_type' => 'required|string|max:255', // New validation rule
+            'category_name' => 'required|string|max:255', // New validation rule
+            'brand_name' => 'required|string|max:255', // New validation rule
             'description' => 'nullable|string',
             'file_path' => 'required|string|max:255',
-'document_name' => 'required|string|max:255', // New validation rule
-            'document_type' => 'required|string|max:255', // New validation rule
         ]);
 
-        DocumentsSection::create($request->all());
+        // Insert the document with category
+        DocumentsSection::create([ // Corrected the class name
+            'document_name'  => $request->document_name,
+            'document_type'  => $request->document_type,
+            'document_category' => $request->category_name,  // Ensure this field is inserted
+            'document_brand'     => $request->brand_name, // Use the correct database column name
+            'description'    => $request->description,
+            'file_path'      => $request->file_path,
+        ]);
 
         return redirect()->route('admin.documents-sections.index')->with('success', 'Document created successfully.');
     }
@@ -52,13 +58,12 @@ class DocumentsSectionsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'type' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'nullable|exists:brands,id',
+            'document_name' => 'required|string|max:255', // New validation rule
+            'document_type' => 'required|string|max:255', // New validation rule
+            'category_name' => 'required|string|max:255', // New validation rule
+            'brand_name' => 'required|string|max:255', // New validation rule
             'description' => 'nullable|string',
             'file_path' => 'required|string|max:255',
-'document_name' => 'required|string|max:255', // New validation rule
-            'document_type' => 'required|string|max:255', // New validation rule
         ]);
 
         $document = DocumentsSection::findOrFail($id);

@@ -53,60 +53,90 @@
         <form action="<?php echo e(route('admin.documents-sections.store')); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <div class="mb-3">
-                <label for="document_name" class="form-label">Document Name</label>
+                <label for="document_name" class="form-label mt-2">Document Name</label>
                 <input type="text" class="form-control" id="document_name" name="document_name" required>
+                <?php $__errorArgs = ['document_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="document mb-3" id="document-0">
-                <label for="documents[0][document_type]" class="form-label">Document Type</label>
-                <select name="documents[0][document_type]" class="form-control" required>
+                <label for="document_type" class="form-label">Document Type</label>
+                <select name="document_type" class="form-control" required>
                     <option value="Software">Software</option>
                     <option value="PDF">PDF</option>
                     <option value="Driver">Driver</option>
                 </select>
+                <?php $__errorArgs = ['document_type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
-            <!-- Category -->
-            
-
-
-            <div class="form-group mb-4">
-                <label for="category_id">Category</label>
-                <input type="text" name="category_id" class="form-control" id="category_id" required>
-            </div>
-
-            <!-- Brand -->
-            <div class="form-group mb-4">
-                <label for="brand_id">Brand</label>
-                <select name="brand_id" id="brand_id" class="form-control">
-                    <option value="">Select Brand</option>
-                    <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($brand->id); ?>"
-                            <?php echo e(old('brand_id', $product->brand_id ?? '') == $brand->id ? 'selected' : ''); ?>>
-                            <?php echo e($brand->name); ?>
-
-                        </option>
+            <div class="form-group mb-3">
+                <label for="category_name">Document Category</label>
+                <select name="category_name" id="category_name" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($category->name); ?>"><?php echo e($category->name); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
+                <?php $__errorArgs = ['category_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
-            
-
-            
-
-            
+            <div class="form-group mb-3">
+                <label for="brand_name">Document Brand</label>
+                <select name="brand_name" id="brand_name" class="form-control" required>
+                    <option value="">Select Brand</option>
+                    <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($brand->name); ?>"><?php echo e($brand->name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                <?php $__errorArgs = ['brand_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" class="form-control" id="description"></textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label for="file_path">File Path</label>
                 <input type="text" name="file_path" class="form-control" id="file_path" required>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">Create</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-2 float-end">Create</button>
         </form>
     </div>
 <?php $__env->stopSection(); ?>

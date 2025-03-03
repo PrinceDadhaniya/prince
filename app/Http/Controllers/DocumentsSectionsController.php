@@ -21,21 +21,19 @@ class DocumentsSectionsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'brand_id' => 'nullable|exists:brands,id',
-            'product_id' => 'required|exists:products,id',
-            'category_id' => 'required|exists:categories,id',
-            'type' => 'required|string',
-            'title' => 'nullable|string',
+            'document_name' => 'required|string|max:255',
+            'document_type' => 'required|string|max:255',
+            'category_name' => 'required|string|max:255',
+            'brand_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file_path' => 'required|string',
+            'file_path' => 'required|string|max:255',
         ]);
 
         Document::create([
-            'brand_id' => $request->brand_id,
-            'product_id' => $request->product_id,
-            'category_id' => $request->category_id,
-            'type' => $request->type,
-            'title' => $request->title,
+            'document_name' => $request->document_name,
+            'document_type' => $request->document_type,
+            'category_name' => $request->category_name,
+            'brand_name' => $request->brand_name,
             'description' => $request->description,
             'file_path' => $request->file_path,
         ]);

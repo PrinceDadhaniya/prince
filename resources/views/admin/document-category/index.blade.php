@@ -63,8 +63,8 @@
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->parent ? $category->parent->name : 'None' }}</td>
                                     <td>
-                                        <a href="{{ route('admin.document-category.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('admin.document-category.destroy', $category->id) }}" method="POST" style="display:inline-block;">
+                                        <a href="{{ route('admin.document-categories.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        <form action="{{ route('admin.document-categories.destroy', $category->id) }}" method="POST" style="display:inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
