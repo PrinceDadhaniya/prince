@@ -20,14 +20,18 @@ use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MiniSliderController;
-use App\Http\Controllers\Admin\DocumentsSectionsController; // Correct the import
+use App\Http\Controllers\ContactUsDetailsController; // Correct the import
 use App\Http\Controllers\Frontend\FrontendController; // Correct the import
 use App\Http\Controllers\Admin\SecondSliderController; // Add this import
 // use App\Http\Controllers\Admin\DocumentCategoryController;
-use App\Http\Controllers\Admin\DocumentBrandController; // Add this line
+use App\Http\Controllers\Frontend\ShowBrandController; // Add this line
+// use App\Http\Controllers\Frontend\BrandController; // Update the import for frontend
+use App\Http\Controllers\Admin\DocumentBrandController;
+use App\Http\Controllers\Admin\ContactUsDetailController;
 
 Auth::routes();
 use App\Http\Controllers\Admin\DocumentCategoryController;
+use App\Http\Controllers\Admin\DocumentsSectionsController;
 
 Route::get('/products', Products::class);
 
@@ -352,3 +356,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('documents-sections', DocumentsSectionsController::class);
 
 });
+
+Route::get('/brand', [ShowBrandController::class, 'index'])->name('brand');
+Route::get('/brand/{id}', [ShowBrandController::class, 'show'])->name('brand.show');
+Route::get('/brand/{brand_id}/category/{category_id}', [FrontendController::class, 'showCategoryWithBrand'])->name('brand.category.show');
+
+Route::get('/admin/contact-us-details', [ContactUsDetailsController::class, 'create']);
+Route::post('/admin/contact-us-details', [ContactUsDetailsController::class, 'store']);
+Route::post('/admin/contact-us-details', [ContactUsDetailsController::class, 'store']);
+Route::post('/admin/contact-us-details', [ContactUsDetailController::class, 'store']);
+
+
+
+
+Route::get('/contact-us/create', [App\Http\Controllers\Frontend\ContactUsController::class, 'create']);
+Route::post('/contact-us', [App\Http\Controllers\Frontend\ContactUsController::class, 'store']);

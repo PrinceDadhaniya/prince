@@ -100,36 +100,6 @@ class DocumentCategoryController extends Controller
         return redirect()->route('admin.document-category.index')->with('message', 'Document Category created successfully.');
     }
 
-
-    // public function store(DocumentCategoryFormRequest $request)
-    // {
-    //     $validatedData = $request->validated();
-
-    //     $category = new DocumentCategory;
-    //     $category->name = $validatedData['name'];
-    //     $category->slug = Str::slug($validatedData['slug']);
-    //     $category->parent_id = $validatedData['parent_id'];
-    //     $category->serial_number = $validatedData['serial_number'] ?? null;
-    //     $category->description = $validatedData['description']; // Fix: Ensure description is assigned
-
-    //     if ($request->hasFile('image')) {
-    //         $file = $request->file('image');
-    //         $ext = $file->getClientOriginalExtension();
-    //         $filename = time() . '.' . $ext;
-    //         $path = public_path('uploads/category');
-    //         if (!file_exists($path)) {
-    //             mkdir($path, 0755, true); // Create the directory if it doesn't exist
-    //         }
-    //         $file->move($path, $filename);
-    //         $category->image = $filename;
-    //     }
-
-    //     $category->save();
-    //     return redirect()->route('admin.document-category.index')->with('message', 'Document Category created successfully.');
-    // }
-
-
-
     // Show the category editing form
     public function edit($id)
     {
@@ -178,7 +148,7 @@ class DocumentCategoryController extends Controller
         }
 
         $category->save();
-        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('admin.document-category.index')->with('success', 'Category updated successfully.');
     }
 
     // Delete a category

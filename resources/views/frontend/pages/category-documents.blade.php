@@ -225,6 +225,16 @@
             // Event Listeners
             $('#applyFilters').click(applyFilters);
             $('#resetFilters').click(resetFilters);
+
+            // Fetch all categories and subcategories on page load
+            let allCategories = @json($categories->pluck('id'));
+            fetchSubcategories(allCategories);
         });
     </script>
+    <style>
+        /* Add this rule to change cursor to pointer on hover */
+        div:hover {
+            cursor: pointer;
+        }
+    </style>
 @endsection

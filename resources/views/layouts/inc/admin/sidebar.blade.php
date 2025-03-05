@@ -163,6 +163,7 @@
                         <ul class="sidebar-submenu" style="display: none;">
                             <li><a href="{{ url('admin/settings/about-us') }}">About-Us</a></li>
                             <li><a href="{{ url('admin/contact-us') }}">Contact-Us</a></li>
+                            <li><a href="{{ url('admin/contact-us-details') }}">Contact-us-Details</a></li>
                             <li><a class="submenu-title" href="#" data-bs-original-title="" title="">Slider
                                     Setting<span class="sub-arrow"><i class="fa fa-angle-right"></i></span>
                                     <div class="according-menu"><i class="fa fa-angle-right"></i></div>

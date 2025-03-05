@@ -94,7 +94,7 @@
 
         <div class="container-fluid">
             <!-- Brand on New Line -->
-            <a class="nav-link text-white fw-bold px-3 py-2 rounded" href="#"
+            <a class="nav-link text-white fw-bold px-3 py-2 rounded" href="/brand"
                 style="transition: background-color 0.3s ease;">
                 Brand
             </a>

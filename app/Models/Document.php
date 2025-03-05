@@ -10,12 +10,14 @@ class Document extends Model
     use HasFactory;
 
     protected $fillable = [
+        'product_id',
         'document_name',
         'document_type',
         'category_name',
         'brand_name',
         'description',
         'file_path',
+        'type',
     ];
 
     public function category() {

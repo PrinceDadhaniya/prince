@@ -10,7 +10,7 @@
                 <h5 class="card-header text-white fw-bold" style="background-color: #0d6efd;">Categories</h5>
                 <div class="card-body">
                     <!-- Show categories with parent_id equal to the current category's ID -->
-                    @if($childCategories && $childCategories->count() > 0)
+                    @if(isset($childCategories) && $childCategories->count() > 0)
                         <div class="subcategories ms-3">
                             @foreach($childCategories as $subcategory)
                                 <div class="mb-2">
@@ -63,8 +63,8 @@
             @if($category)
                 <p class="product-path text-muted mt-3 ms-3">
                     Products & Services
-                    @foreach ($breadcrumb as $category)
-                        > <a href="{{ url('/category', $category->id) }}">{{ $category->name }}</a>
+                    @foreach ($breadcrumb as $crumb)
+                        > <a href="{{ url('/category', $crumb->id) }}">{{ $crumb->name }}</a>
                     @endforeach
                     > {{ $category->name }}
                 </p>
@@ -85,22 +85,22 @@
 
                 <!-- Tabs -->
                 <ul class="nav nav-tabs mt-4" id="categoryTabs">
-                    @if($childCategories->count() > 0)
+                    @if(isset($childCategories) && $childCategories->count() > 0)
                         <li class="nav-item">
                             <button class="nav-link active" id="subcategories-tab" data-bs-toggle="tab" data-bs-target="#subcategories-pane" type="button">Subcategories</button>
                         </li>
                     @endif
 
-                    @if($category->products->count() > 0)
+                    @if(isset($products) && $products->count() > 0)
                         <li class="nav-item">
-                            <button class="nav-link {{ $childCategories->count() == 0 ? 'active' : '' }}" id="products-tab" data-bs-toggle="tab" data-bs-target="#products-pane" type="button">Products</button>
+                            <button class="nav-link {{ isset($childCategories) && $childCategories->count() == 0 ? 'active' : '' }}" id="products-tab" data-bs-toggle="tab" data-bs-target="#products-pane" type="button">Products</button>
                         </li>
                     @endif
                 </ul>
 
                 <div class="tab-content">
                     <!-- Subcategories Tab -->
-                    @if($childCategories->count() > 0)
+                    @if(isset($childCategories) && $childCategories->count() > 0)
                     <div class="tab-pane fade show active" id="subcategories-pane">
                         <main class="category-list mt-4">
                             <div class="row row-cols-1 row-cols-md-3 g-4" id="subcategory-list">
@@ -124,16 +124,16 @@
                     @endif
 
                     <!-- Products Tab -->
-                    @if($category->products->count() > 0)
-                    <div class="tab-pane fade {{ $childCategories->count() == 0 ? 'show active' : '' }}" id="products-pane">
+                    @if(isset($products) && $products->count() > 0)
+                    <div class="tab-pane fade {{ isset($childCategories) && $childCategories->count() == 0 ? 'show active' : '' }}" id="products-pane">
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
-                            @foreach ($category->products as $product)
+                            @foreach ($products as $product)
                                 <div class="col">
                                     <div class="card">
                                         @php
                                             $images = json_decode(str_replace('\\', '/', $product->images), true);
                                         @endphp
-                
+
                                         <div class="card-img-top">
                                             @if (!empty($images) && is_array($images))
                                                 @foreach ($images as $image)
@@ -147,7 +147,7 @@
                                                 <p>No images available</p>
                                             @endif
                                         </div>
-                
+
                                         <div class="card-body d-flex flex-column">
                                             <h5 class="card-title text-primary text-truncate">{{ $product->name }}</h5>
                                             <p class="card-text text-muted text-truncate">{{ $product->serial_number }}</p>
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                 @endif
-                
+
                 </div>
 
             @else

@@ -475,7 +475,7 @@
                 @foreach ($brand as $b)
                     <div class="category-item">
                         <div class="icon-container">
-                            <a href="{{ route('subcategory', ['category_id' => $cat->id]) }}">
+                            <a href="{{ url('/brand') }}">
 
                                 <img src="{{ asset($b->image) }}" alt="{{ $b->name }}" class="brand-logo">
                             </a>
@@ -488,7 +488,7 @@
                 @foreach ($brand as $b)
                     <div class="category-item">
                         <div class="icon-container">
-                            <a href="#">
+                            <a href="{{ url('/brand') }}">
                                 <img src="{{ asset($b->image) }}" alt="{{ $b->name }}" class="brand-logo">
                             </a>
                         </div>

@@ -16,8 +16,8 @@
                                 <img src="{{ asset($article->image) }}" class="card-img-top fixed-image" alt="{{ $article->header }}">
                             </a>
                                 <div class="card-body">
-                                    <h3 class="card-title">{{ $article->header }}</h3>
-                                    <p class="card-text">{{ Str::limit($article->description, 150, '...') }}</p> <!-- Adjusted limit to 150 characters -->
+                                    <h3 class="card-title text-truncate">{{ $article->header }}</h3>
+                                    <p class="card-text text-truncate">{{ Str::limit($article->description, 150, '...') }}</p> <!-- Adjusted limit to 150 characters -->
                                     <a href="{{ route('newsview', $article->id) }}" class="btn btn-primary">Read More</a>
                                 </div>
                             </div>

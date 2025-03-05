@@ -8,6 +8,7 @@ use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Brand;
 
 class FrontendController extends Controller
 {
@@ -202,12 +203,31 @@ class FrontendController extends Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
-
-
-
     public function getSubcategories(Request $request)
     {
         $subcategories = Category::whereIn('parent_id', $request->categories)->get();
         return response()->json($subcategories);
+    }
+
+    public function showCategoryWithBrand($brand_id, $category_id)
+    {
+        $brand = Brand::findOrFail($brand_id);
+        $category = Category::findOrFail($category_id);
+
+        // Fetch products related to the brand and category
+        $products = Product::where('brand_id', $brand_id)
+                            ->where('category_id', $category_id)
+                            ->get();
+
+        // Fetch brands related to the category
+        $relatedBrands = Brand::where('category_id', $category_id)->get();
+
+        // Fetch child categories
+        $childCategories = Category::where('parent_id', $category_id)->get();
+
+        // Generate breadcrumb
+        $breadcrumb = $this->getBreadcrumb($category);
+
+        return view('frontend.category.show', compact('brand', 'category', 'products', 'relatedBrands', 'childCategories', 'breadcrumb'));
     }
 }

@@ -21,6 +21,10 @@
             padding: 1.5rem; /* Increased padding */
             margin-bottom: 1.5rem; /* Increased margin */
         }
+        /* Add this rule to change cursor to pointer on hover */
+        div:hover {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-light">
