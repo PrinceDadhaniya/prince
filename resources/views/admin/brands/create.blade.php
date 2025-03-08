@@ -46,6 +46,17 @@
                         </div>
                     </div>
 
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Category</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="category_id" name="category_id" required>
+                                <option value="">Select Category</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $brand->category_id ?? '') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label">Serial Number</label>
@@ -74,8 +85,5 @@
     </div>
     </div>
 </div>
-
-
-
 
 @endsection

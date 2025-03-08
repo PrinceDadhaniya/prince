@@ -46,7 +46,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" name="name" value="{{ $category->name }}">
+                            <input class="form-control" type="text" name="name" value="{{ old('name', $category->name) }}">
                         </div>
                     </div>
 
@@ -54,7 +54,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label">Slug</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" name="slug" value="{{ $category->slug }}">
+                            <input class="form-control" type="text" name="slug" value="{{ old('slug', $category->slug) }}">
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label">Description</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" name="description" value="{{ $category->description }}">
+                            <input class="form-control" type="text" name="description" value="{{ old('description', $category->description) }}">
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label">Serial Number</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" name="serial_number" value="{{ $category->serial_number }}">
+                            <input class="form-control" type="text" name="serial_number" value="{{ old('serial_number', $category->serial_number) }}">
                         </div>
                     </div>
 
@@ -81,10 +81,9 @@
                             <select class="form-control" name="parent_id">
                                 <option value="">None</option>
                                 @foreach ($parentCategories as $parentCategory)
-                                    @include('admin.category.partials.category_option', [
-                                        'category' => $parentCategory,
-                                        'level' => 0,
-                                    ])
+                                    <option value="{{ $parentCategory->id }}" {{ $parentCategory->id == old('parent_id', $category->parent_id) ? 'selected' : '' }}>
+                                        {{ $parentCategory->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>

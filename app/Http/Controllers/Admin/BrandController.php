@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Brand;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
@@ -32,42 +33,66 @@ class BrandController extends Controller
         return view('admin.brands.create', compact('brand', 'nextSerialNumber'));
     }
 
-    // public function save(Request $request, $id = null)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Accepts only image files
-    //         'description' => 'nullable|string',
-    //         'serial_number' => 'required|integer|unique:brands,serial_number,' . $id, // Ensure uniqueness, except for the current record (if editing)
-    //     ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'serial_number' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    //     $brand = $id ? Brand::findOrFail($id) : new Brand();
-    //     if ($request->hasFile('image')) {
-    //         $image = $request->file('image');
-    //         $imagePath = 'brands/' . uniqid() . '.' . $image->getClientOriginalExtension();
-    //         $image->move(public_path('brands'), $imagePath);
-    //         if ($id && $brand->image) {
-    //             File::delete(public_path('brands/' . $brand->image)); // Ensure path is correct when deleting
-    //         }
-    //         $brand->image = $imagePath;
-    //     }
+        $brand = new Brand();
+        $brand->name = $request->name;
+        $brand->description = $request->description;
+        $brand->category_id = $request->category_id;
+        $brand->serial_number = $request->serial_number;
 
-    //     $brand->name = $request->name;
-    //     $brand->description = $request->description;
-    //     $brand->serial_number = $request->serial_number;
-    //     $brand->save();
-    //     $existingSerialNumbers = Brand::orderBy('serial_number', 'asc')->pluck('serial_number')->toArray();
-    //     $nextSerialNumber = $this->getNextAvailableSerialNumber($existingSerialNumbers);
-    //     return redirect()->route('admin.brands.index')->with('success', $id ? 'Brand updated successfully!' : 'Brand created successfully!');
-    // }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('brands', 'public');
+            $brand->image = $imagePath;
+        }
+
+        $brand->save();
+
+        return redirect()->route('admin.brands.index')->with('success', 'Brand created successfully.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'serial_number' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $brand = Brand::findOrFail($id);
+        $brand->name = $request->name;
+        $brand->description = $request->description;
+        $brand->category_id = $request->category_id;
+        $brand->serial_number = $request->serial_number;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('brands', 'public');
+            $brand->image = $imagePath;
+        }
+
+        $brand->save();
+
+        return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully.');
+    }
 
     public function save(Request $request, $id = null)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Accepts only image files
             'description' => 'nullable|string',
-            'serial_number' => 'required|integer|unique:brands,serial_number,' . $id, // Ensure uniqueness, except for the current record (if editing)
+            'category_id' => 'required|exists:categories,id',
+            'serial_number' => 'required|integer|unique:brands,serial_number,' . $id,
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $brand = $id ? Brand::find($id) : new Brand();
@@ -86,7 +111,6 @@ class BrandController extends Controller
                     ->with('error', 'Failed to upload the image. Please try again.');
             }
 
-
             if ($id && $brand->image) {
                 File::delete(public_path('brands/' . $brand->image));
             }
@@ -96,10 +120,13 @@ class BrandController extends Controller
 
         $brand->name = $request->name;
         $brand->description = $request->description;
+        $brand->category_id = $request->category_id;
         $brand->serial_number = $request->serial_number;
         $brand->save();
+
         $existingSerialNumbers = Brand::orderBy('serial_number', 'asc')->pluck('serial_number')->toArray();
         $nextSerialNumber = $this->getNextAvailableSerialNumber($existingSerialNumbers);
+
         return redirect()->route('admin.brands.index')->with('message', $id ? 'Brand updated successfully!' : 'Brand created successfully!');
     }
 
@@ -145,33 +172,6 @@ class BrandController extends Controller
             'relatedBrands' => $relatedBrands,
         ]);
     }
-
-
-    // public function filterCategories(Request $request)
-    // {
-    //     $categoryIds = explode(',', $request->categories);
-    //     $brandIds = explode(',', $request->brands);
-
-    //     // Fetch subcategories only if no brand is selected
-    //     $subcategories = [];
-    //     if (empty($brandIds)) {
-    //         $subcategories = Category::whereIn('parent_id', $categoryIds)->get();
-    //     }
-
-    //     // Fetch products based on category and brand filters
-    //     $products = Product::whereIn('category_id', $categoryIds);
-
-    //     if (!empty($brandIds)) {
-    //         $products->whereIn('brand_id', $brandIds);
-    //     }
-
-    //     $products = $products->get();
-
-    //     return response()->json([
-    //         'subcategories' => $subcategories,
-    //         'products' => $products
-    //     ]);
-    // }
 
 
     public function filterCategories(Request $request)

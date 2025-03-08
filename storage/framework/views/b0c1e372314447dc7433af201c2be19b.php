@@ -1,11 +1,14 @@
 <!-- Page Sidebar Start-->
 <div class="sidebar-wrapper">
     <div>
-        <div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light"
-                    src="<?php echo e(asset('admin\images\logo\logo.png')); ?>" alt=""><img class="img-fluid for-dark"
-                    src="<?php echo e(asset('admin/logo/logo_dark.png')); ?>" alt=""></a>
+        <div class="logo-wrapper">
+            <a href="index.html">
+                <img class="img-fluid for-light" style="height: 52px;" src="<?php echo e(asset('assets/silder/logo.jpg')); ?>" alt="">
+                
+
+            </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
-            <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            
         </div>
         <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid"
                     src="<?php echo e(asset('admin/images/logo/logo-icon.png')); ?>" alt=""></a></div>
@@ -18,7 +21,7 @@
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
                                 aria-hidden="true"></i></div>
                     </li>
-                    <li class="sidebar-main-title">
+                    <li class="sidebar-main-title mt-3">
                         <div>
                             <h6 class="lan-1">General</h6>
                             <p class="lan-2">Dashboards,widgets & layout.</p>
@@ -100,7 +103,7 @@
 
 
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                            data-feather="airplay"></i><span>Documents Category</span></a>
+                                data-feather="airplay"></i><span>Documents Category</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="<?php echo e(route('admin.document-category.create')); ?>">Add Document Category</a></li>
                             <li><a href="<?php echo e(route('admin.document-category.index')); ?>">View Document Category</a></li>
@@ -125,8 +128,10 @@
                         <ul class="sidebar-submenu" style="display: none;">
                             <li><a href="<?php echo e(url('admin/settings/about-us')); ?>">About-Us</a></li>
                             <li><a href="<?php echo e(url('admin/contact-us')); ?>">Contact-Us</a></li>
-                            <li><a href="<?php echo e(url('admin/contact-us-details')); ?>">Contact-us-Details</a></li>
-                            <li><a class="submenu-title" href="#" data-bs-original-title="" title="">Slider
+                            
+                            <li><a href="<?php echo e(url('admin/contact-us-details/index')); ?>">View Contact-us-Details</a></li>
+                            <li><a class="submenu-title" href="#" data-bs-original-title=""
+                                    title="">Slider
                                     Setting<span class="sub-arrow"><i class="fa fa-angle-right"></i></span>
                                     <div class="according-menu"><i class="fa fa-angle-right"></i></div>
                                 </a>

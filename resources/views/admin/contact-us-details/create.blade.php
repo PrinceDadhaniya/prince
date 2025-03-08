@@ -26,7 +26,8 @@
                 <div class="card mb-3 mt-4">
                     <div class="card-body">
                         <h5 class="card-title text-primary fs-3">Contact-Us Details</h5>
-                        <div class="form-group mb-3">
+                        <a href="{{ url('admin/contact-us-details/index') }}" class="btn btn-danger btn-sm text-white float-end">Back</a>
+                        <div class="form-group mb-3 mt-4">
                             <label for="address">Address</label>
                             <textarea name="address" class="form-control" id="address" rows="3" required></textarea>
                         </div>

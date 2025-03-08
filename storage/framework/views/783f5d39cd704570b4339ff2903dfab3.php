@@ -75,7 +75,8 @@
             <div class="col-md-6 mb-4 mb-md-0">
                 <div class="map-container mt-5">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.044517676073!2d70.76460357474984!3d22.31892064222126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c9909e845a83%3A0x4863465519cad832!2sMaruti%20Industrial%20Area%2C%20Ramwadi%202%2C%20Rolex%20Road%2C%20Near%20Maldhari%20Railway%20Crossing%2C%20Rajkot-4%2C%20Gujarat%2C%20India!5e0!3m2!1sen!2sin!4v1733203903876!5m2!1sen!2sin"
+                        
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.0118856576836!2d70.803777!3d22.2393047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959b5601a9a7e85%3A0xb70d6f561d9cfaee!2sNeXT%20SOLUTION!5e0!3m2!1sen!2sin!4v1733203903876!5m2!1sen!2sin"
                         width="1270px" height="300px" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>

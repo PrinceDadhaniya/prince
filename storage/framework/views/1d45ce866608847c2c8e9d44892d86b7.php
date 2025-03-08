@@ -130,5 +130,4 @@
     <?php echo $__env->yieldPushContent('script'); ?>
 
 </body>
-</html>
-<?php /**PATH C:\Users\ITP\Downloads\prince (3) (1)\prince\resources\views/layouts/admin.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\Users\ITP\Downloads\prince (3) (1)\prince\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

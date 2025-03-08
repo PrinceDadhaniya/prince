@@ -154,6 +154,7 @@ class CategoryController extends Controller
             $category->image = $filename;
         }
 
+        $category->touch(); // Ensure the updated_at timestamp is updated
         $category->save();
         return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
     }

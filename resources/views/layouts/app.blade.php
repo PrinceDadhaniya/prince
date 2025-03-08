@@ -87,6 +87,13 @@
         ::-webkit-scrollbar-thumb:hover {
             background-color: #555;
         }
+        html, body {
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        .carousel-inner, .owl-carousel {
+            overflow: hidden; /* Prevent overflow in carousels */
+        }
     </style>
 
     <!-- Scripts -->

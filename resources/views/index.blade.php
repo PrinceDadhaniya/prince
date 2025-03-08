@@ -50,7 +50,7 @@
         <style>
             .full-width-image {
                 width: 100vw;
-                max-height: 600px;
+                max-height: 530px;
                 object-fit: cover;
             }
 

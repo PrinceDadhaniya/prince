@@ -365,6 +365,12 @@ Route::get('/admin/contact-us-details', [ContactUsDetailsController::class, 'cre
 Route::post('/admin/contact-us-details', [ContactUsDetailsController::class, 'store']);
 Route::post('/admin/contact-us-details', [ContactUsDetailsController::class, 'store']);
 Route::post('/admin/contact-us-details', [ContactUsDetailController::class, 'store']);
+Route::get('admin/contact-us-details/index', [ContactUsDetailsController::class, 'index'])->name('contact-us-details.index');
+Route::delete('admin/contact-us-details/{id}', [ContactUsDetailsController::class, 'destroy'])->name('contact-us-details.destroy');
+Route::get('admin/contact-us-details/{id}/edit', [ContactUsDetailsController::class, 'edit'])->name('contact-us-details.edit');
+Route::put('admin/contact-us-details/{id}', [ContactUsDetailsController::class, 'update'])->name('contact-us-details.update');
+
+Route::post('/admin/contact-us-details', [ContactUsDetailsController::class, 'store']);
 
 
 

@@ -353,7 +353,7 @@
                              <i class="middle fa fa-angle-down"></i>
                          </div>
                      </div>
-                     <ul class="profile-dropdown onhover-show-div">
+                     <ul class="profile-dropdown onhover-show-div" style="margin-right: 220px">
                          <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
                          <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
                          <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
