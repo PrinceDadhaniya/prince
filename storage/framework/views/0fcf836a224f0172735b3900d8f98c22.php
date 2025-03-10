@@ -7,7 +7,7 @@
             <div class="container mb-4 mt-4">
                 <div class="row">
                     <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="col-md-4 d-flex align-items-stretch">
+                        <div class="col-md-4 d-flex align-items-stretch mb-4">
                             <a href="<?php echo e(route('newsview', $article->id)); ?>" class="card-link">
                                 <div class="card h-100">
                                     <a href="<?php echo e(route('newsview', $article->id)); ?>">
@@ -45,6 +45,7 @@
 
     .card {
         height: 100%;
+        width: 100%;
         /* Ensure cards stretch to the same height */
         display: flex;
         flex-direction: column;

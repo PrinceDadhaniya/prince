@@ -460,7 +460,7 @@
     }
 
     .subcategory-box i {
-        color: white;
+        color: yellowgreen;
         font-size: 1rem;
         transition: transform 0.2s ease-in-out;
     }

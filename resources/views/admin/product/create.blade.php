@@ -134,11 +134,13 @@
                                         </option>
                                     </select>
                                     <label for="documents[{{ $index }}][file_path]" class="form-label">File</label>
-                                    <input type="file" name="documents[{{ $index }}][file_path]" class="form-control">
+                                    <input type="file" name="documents[{{ $index }}][file_path]"
+                                        class="form-control">
                                     @if ($document->file_path)
                                         <div class="mt-2">
                                             <h5>Existing Document:</h5>
-                                            <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank">View Document</a>
+                                            <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank">View
+                                                Document</a>
                                         </div>
                                     @endif
                                 </div>
@@ -153,10 +155,22 @@
                                 </select>
                                 <label for="documents[0][file_path]" class="form-label">File</label>
                                 <input type="file" name="documents[0][file_path]" class="form-control">
+
+                                <div class="form-group mt-2">
+                                    <label for="file_path">File Path</label>
+                                    <input type="text" name="file_path" class="form-control" id="file_path" required>
+                                    @if(isset($document->file_path) && $document->file_path)
+                                        <div class="mt-2">
+                                            <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank">View Document</a>
+                                        </div>
+                                    @endif
+                                </div>
+
                             </div>
                         @endif
                     </div>
-                    <button type="button" class="btn btn-success btn-sm text-white float-end" id="add-document">+ Add Document</button>
+                    <button type="button" class="btn btn-success btn-sm text-white float-end" id="add-document">+ Add
+                        Document</button>
                 </div>
             </div>
 
@@ -273,6 +287,12 @@
                 </select>
                 <label for="documents[${index}][file_path]" class="form-label">File</label>
                 <input type="file" name="documents[${index}][file_path]" class="form-control">
+
+                <div class="form-group mt-2">
+                    <label for="file_path">File Path</label>
+                    <input type="text" name="file_path" class="form-control" id="file_path" required>
+                </div>
+
                 <button type="button" class="btn btn-danger remove-document mt-3">Remove</button>
             `;
             document.getElementById('documents-container').appendChild(documentRow);

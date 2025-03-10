@@ -129,7 +129,8 @@
                                     <?php endif; ?>
                                 </div>
                                 <div class="mt-2">
-                                    <a href="<?php echo e(url('/all-documents')); ?>" class="text-primary">See all documents</a>
+                                    <a href="#documents-section" class="text-primary" id="scroll-to-documents">See all
+                                        documents</a>
                                 </div>
                             </div>
                         </div>
@@ -198,89 +199,60 @@
 
 
                 
-                <div class="container mt-4">
-                    <h2 class="text-success">Documents</h2>
-                    <div class="row">
-                        <!-- Filters -->
-                        <div class="col-md-3 mt-3">
-                            <div class="mb-3">
-                                    <h5 class="card-header text-white fw-bold" style="background-color: #0d6efd;">Document Category</h5>
-                                    
+                <div class="container mt-4" id="documents-section">
+                    <div class="col-mt-4">
+                        <h3 class="fw-bold text-success">Documents</h3>
+                    </div>
+                    
+                    
 
-                                    <div class="border p-3">
-                                        <?php if(isset($documents) && $documents->count() > 0): ?>
-                                            <?php $__currentLoopData = $documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div class="mb-2">
-                                                    <input type="checkbox" class="form-check-input me-2 category-filter" value="<?php echo e($category->name); ?>">
-                                                    <label class="form-check-label"><?php echo e($document->name); ?></label>
-                                                </div>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php else: ?>
-                                            <p class="text-muted"><i>No document categories available.</i></p>
-                                        <?php endif; ?>
-                                    </div>
-                            </div>
-
-
-                            
-
-                            <!-- Language -->
-                            
-
-                            <!-- Clear Filter Button -->
-                            <div class="mb-4">
-                                <button class="btn btn-secondary w-100" id="clear-filters">Clear Filters</button>
-                            </div>
-
-                        </div>
-
-                        <!-- Document List -->
-                        <div class="col-md-8 mt-3" style="margin-left: 100px;">
-                            <div id="documentList">
-                                <?php if(isset($product) && $product->documents->count() > 0): ?>
-                                    <?php $__currentLoopData = $product->documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php
-                                            $documentType = 'File';
-                                            if (Str::endsWith($document->file_path, '.pdf')) {
-                                                $documentType = 'PDF';
-                                            } elseif (Str::endsWith($document->file_path, ['.exe', '.zip'])) {
-                                                $documentType = 'Software';
-                                            } elseif (Str::endsWith($document->file_path, ['.dll', '.inf'])) {
-                                                $documentType = 'Driver';
-                                            }
-                                        ?>
-                                        <div class="card mb-2 document-item" data-category="<?php echo e($documentType); ?>"
-                                            data-language="<?php echo e($document->language ?? 'English'); ?>">
-                                            <div class="card-body">
+                    <!-- Document List -->
+                    <div class="col-md-8" style="margin-left: 430px;">
+                        <div id="documentList">
+                            <?php if(isset($product) && $product->documents->count() > 0): ?>
+                                <?php $__currentLoopData = $product->documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
+                                        $documentType = 'File';
+                                        if (Str::endsWith($document->file_path, '.pdf')) {
+                                            $documentType = 'PDF';
+                                        } elseif (Str::endsWith($document->file_path, ['.exe', '.zip'])) {
+                                            $documentType = 'Software';
+                                        } elseif (Str::endsWith($document->file_path, ['.dll', '.inf'])) {
+                                            $documentType = 'Driver';
+                                        }
+                                    ?>
+                                    <div class="card mb-2 document-item" data-category="<?php echo e($documentType); ?>"
+                                        data-language="<?php echo e($document->language ?? 'English'); ?>">
+                                        <div class="card-body">
+                                            <a href="<?php echo e(asset('documents/' . basename($document->file_path))); ?>"
+                                                target="_blank" class="btn btn-outline-primary float-end">Download</a>
+                                            <h5 style="text-align:left">
                                                 <a href="<?php echo e(asset('documents/' . basename($document->file_path))); ?>"
-                                                    target="_blank" class="btn btn-outline-primary float-end">Download</a>
-                                                <h5 style="text-align:left">
-                                                    <a href="<?php echo e(asset('documents/' . basename($document->file_path))); ?>"
-                                                        target="_blank" class="text-decoration-none text-dark">
-                                                        <?php echo e($document->title ?? ucfirst($document->type)); ?>
+                                                    target="_blank" class="text-decoration-none text-dark">
+                                                    <?php echo e($document->title ?? ucfirst($document->type)); ?>
 
-                                                    </a>
-                                                </h5>
-                                                <p>
-                                                    <?php echo e($documentType); ?> 
-                                                    <?php echo e(date('d M Y', strtotime($document->created_at))); ?> |
-                                                    <?php echo e(ucfirst($document->type)); ?>
+                                                </a>
+                                            </h5>
+                                            <p>
+                                                <?php echo e($documentType); ?> 
+                                                <?php echo e(date('d M Y', strtotime($document->created_at))); ?> |
+                                                <?php echo e(ucfirst($document->type)); ?>
 
-                                                </p>
-                                            </div>
+                                            </p>
                                         </div>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php else: ?>
-                                    <p class="text-muted"><i>No uploaded documents available.</i></p>
-                                <?php endif; ?>
-                            </div>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php else: ?>
+                                <p class="text-muted"><i>No uploaded documents available.</i></p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
+
+
+
+        </div>
         </div>
     </main>
 <?php $__env->stopSection(); ?>
@@ -371,7 +343,7 @@
             $('#scroll-to-documents').on('click', function(e) {
                 e.preventDefault();
                 $('html, body').animate({
-                    scrollTop: $(".container.mt-4").offset().top
+                    scrollTop: $("#documents-section").offset().top
                 }, 1000);
             });
         });

@@ -143,7 +143,8 @@
                                     @endif
                                 </div>
                                 <div class="mt-2">
-                                    <a href="{{ url('/all-documents') }}" class="text-primary">See all documents</a>
+                                    <a href="#documents-section" class="text-primary" id="scroll-to-documents">See all
+                                        documents</a>
                                 </div>
                             </div>
                         </div>
@@ -250,118 +251,93 @@
 
 
                 {{-- Documents --}}
-                <div class="container mt-4">
-                    <h2 class="text-success">Documents</h2>
-                    <div class="row">
+                <div class="container mt-4" id="documents-section">
+                    <div class="col-mt-4">
+                        <h3 class="fw-bold text-success">Documents</h3>
+                    </div>
+                    {{-- <h2 class="text-success">Documents</h2> --}}
+                    {{-- <div class="row">
                         <!-- Filters -->
                         <div class="col-md-3 mt-3">
                             <div class="mb-3">
-                                    <h5 class="card-header text-white fw-bold" style="background-color: #0d6efd;">Document Category</h5>
-                                    <div class="border p-3">
-                                        <input type="checkbox" class="category-filter" value="Software"> Software <br>
-                                        <input type="checkbox" class="category-filter" value="PDF"> PDF <br>
-                                        <input type="checkbox" class="category-filter" value="Driver"> Driver <br>
-                                    </div>
+                                <h5 class="card-header text-white fw-bold" style="background-color: #0d6efd;">Document
+                                    Category</h5>
 
-                                    {{-- <div class="border p-3">
-                                        @if (isset($documents) && $documents->count() > 0)
-                                            @foreach ($documents as $document)
+                                <div class="border p-3">
+                                    @if (isset($product) && $product->documents->count() > 0)
+                                        @php
+                                            $documentTypes = [];
+                                        @endphp
+                                        @foreach ($product->documents as $document)
+                                            @if (in_array($document->type, ['Software', 'PDF', 'Driver']) && !in_array($document->type, $documentTypes))
                                                 <div class="mb-2">
-                                                    <input type="checkbox" class="form-check-input me-2 category-filter" value="{{ $category->name }}">
-                                                    <label class="form-check-label">{{ $document->name }}</label>
+                                                    <input type="checkbox" class="form-check-input me-2 category-filter"
+                                                        value="{{ $document->type }}">
+                                                    <label class="form-check-label">{{ $document->type }}</label>
                                                 </div>
-                                            @endforeach
-                                        @else
-                                            <p class="text-muted"><i>No document categories available.</i></p>
-                                        @endif
-                                    </div> --}}
-                            </div>
-
-
-                            {{-- <div class="card mb-4">
-                                <h5 class="card-header text-white fw-bold" style="background-color: #0d6efd;">Categories</h5>
-                                <div class="card-body">
-                                    <!-- Show categories with parent_id equal to the current category's ID -->
-                                    @if (isset($childCategories) && $childCategories->count() > 0)
-                                        <div class="subcategories ms-3">
-                                            @foreach ($childCategories as $subcategory)
-                                                <div class="mb-2">
-                                                    <input type="checkbox" class="form-check-input me-2 filter-checkbox"
-                                                        name="category[]" id="cat-{{ $subcategory->id }}" value="{{ $subcategory->id }}"
-                                                        {{ request()->is('category/' . $subcategory->id) ? 'checked' : '' }}>
-                                                    <label for="cat-{{ $subcategory->id }}" class="form-check-label">
-                                                        {{ $subcategory->name }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                        </div>
+                                                @php
+                                                    $documentTypes[] = $document->type;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <p class="text-muted"><i>No document categories available.</i></p>
                                     @endif
                                 </div>
-                            </div> --}}
-
-                            <!-- Language -->
-                            {{-- <div class="mb-3" id="languageFilterContainer">
-                            <div class="dropdown">
-                                <h5 class="card-header text-white fw-bold" style="background-color: #0d6efd;">Language</h5>
-                                <div class="border p-3">
-                                    <input type="checkbox" class="language-filter" value="English" checked> English <br>
-                                    <input type="checkbox" class="language-filter" value="All"> All Languages <br>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                            <!-- Clear Filter Button -->
-                            <div class="mb-4">
-                                <button class="btn btn-secondary w-100" id="clear-filters">Clear Filters</button>
                             </div>
 
+                        <!-- Clear Filter Button -->
+                        <div class="mb-4">
+                            <button class="btn btn-secondary w-100" id="clear-filters">Clear Filters</button>
                         </div>
 
-                        <!-- Document List -->
-                        <div class="col-md-8 mt-3" style="margin-left: 100px;">
-                            <div id="documentList">
-                                @if (isset($product) && $product->documents->count() > 0)
-                                    @foreach ($product->documents as $document)
-                                        @php
-                                            $documentType = 'File';
-                                            if (Str::endsWith($document->file_path, '.pdf')) {
-                                                $documentType = 'PDF';
-                                            } elseif (Str::endsWith($document->file_path, ['.exe', '.zip'])) {
-                                                $documentType = 'Software';
-                                            } elseif (Str::endsWith($document->file_path, ['.dll', '.inf'])) {
-                                                $documentType = 'Driver';
-                                            }
-                                        @endphp
-                                        <div class="card mb-2 document-item" data-category="{{ $documentType }}"
-                                            data-language="{{ $document->language ?? 'English' }}">
-                                            <div class="card-body">
+                    </div> --}}
+
+                    <!-- Document List -->
+                    <div class="col-md-8" style="margin-left: 430px;">
+                        <div id="documentList">
+                            @if (isset($product) && $product->documents->count() > 0)
+                                @foreach ($product->documents as $document)
+                                    @php
+                                        $documentType = 'File';
+                                        if (Str::endsWith($document->file_path, '.pdf')) {
+                                            $documentType = 'PDF';
+                                        } elseif (Str::endsWith($document->file_path, ['.exe', '.zip'])) {
+                                            $documentType = 'Software';
+                                        } elseif (Str::endsWith($document->file_path, ['.dll', '.inf'])) {
+                                            $documentType = 'Driver';
+                                        }
+                                    @endphp
+                                    <div class="card mb-2 document-item" data-category="{{ $documentType }}"
+                                        data-language="{{ $document->language ?? 'English' }}">
+                                        <div class="card-body">
+                                            <a href="{{ asset('documents/' . basename($document->file_path)) }}"
+                                                target="_blank" class="btn btn-outline-primary float-end">Download</a>
+                                            <h5 style="text-align:left">
                                                 <a href="{{ asset('documents/' . basename($document->file_path)) }}"
-                                                    target="_blank" class="btn btn-outline-primary float-end">Download</a>
-                                                <h5 style="text-align:left">
-                                                    <a href="{{ asset('documents/' . basename($document->file_path)) }}"
-                                                        target="_blank" class="text-decoration-none text-dark">
-                                                        {{ $document->title ?? ucfirst($document->type) }}
-                                                    </a>
-                                                </h5>
-                                                <p>
-                                                    {{ $documentType }} {{-- ({{ number_format($document->file_size / 1024, 1) }} KB) | --}}
-                                                    {{ date('d M Y', strtotime($document->created_at)) }} |
-                                                    {{ ucfirst($document->type) }}
-                                                </p>
-                                            </div>
+                                                    target="_blank" class="text-decoration-none text-dark">
+                                                    {{ $document->title ?? ucfirst($document->type) }}
+                                                </a>
+                                            </h5>
+                                            <p>
+                                                {{ $documentType }} {{-- ({{ number_format($document->file_size / 1024, 1) }} KB) | --}}
+                                                {{ date('d M Y', strtotime($document->created_at)) }} |
+                                                {{ ucfirst($document->type) }}
+                                            </p>
                                         </div>
-                                    @endforeach
-                                @else
-                                    <p class="text-muted"><i>No uploaded documents available.</i></p>
-                                @endif
-                            </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-muted"><i>No uploaded documents available.</i></p>
+                            @endif
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
+
+
+
+        </div>
         </div>
     </main>
 @endsection
@@ -452,7 +428,7 @@
             $('#scroll-to-documents').on('click', function(e) {
                 e.preventDefault();
                 $('html, body').animate({
-                    scrollTop: $(".container.mt-4").offset().top
+                    scrollTop: $("#documents-section").offset().top
                 }, 1000);
             });
         });
