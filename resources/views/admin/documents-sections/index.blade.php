@@ -68,8 +68,8 @@
                                             <td>{{ $document->id }}</td>
                                             <td>{{ $document->document_name }}</td>
                                             <td>{{ $document->document_type }}</td>
-                                            <td>{{ $document->category ? $document->category->name : 'N/A' }}</td>
-                                            <td>{{ $document->brand ? $document->brand->name : 'N/A' }}</td>
+                                            <td>{{ $document->document_category }}</td>
+                                            <td>{{ $document->document_brand }}</td>
                                             <td>
                                                 <!-- Edit Button -->
                                                 <a href="{{ route('admin.documents-sections.edit', $document->id) }}" class="btn btn-success btn-sm">Edit</a>

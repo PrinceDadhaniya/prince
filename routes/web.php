@@ -377,3 +377,14 @@ Route::post('/admin/contact-us-details', [ContactUsDetailsController::class, 'st
 
 Route::get('/contact-us/create', [App\Http\Controllers\Frontend\ContactUsController::class, 'create']);
 Route::post('/contact-us', [App\Http\Controllers\Frontend\ContactUsController::class, 'store']);
+
+
+
+// DocumentCategory
+Route::get('/fetch-categories', [CategoryController::class, 'fetchCategories'])->name('fetch.categories');
+
+Route::get('/fetch-document-types', [DocumentTypeController::class, 'fetchDocumentTypes'])->name('fetch.document.types');
+
+Route::get('/fetch-document-categories', [DocumentController::class, 'fetchDocumentCategories'])->name('fetch.document.categories');
+
+Route::get('/fetch-document-brands', [DocumentBrandController::class, 'fetchDocumentBrands'])->name('fetch.document.brands');

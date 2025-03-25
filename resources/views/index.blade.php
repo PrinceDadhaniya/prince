@@ -36,13 +36,51 @@
                     loop: true,
                     margin: 0,
                     nav: false,
-                    dots: false,
+                    dots: true, // Enable dots
                     autoplay: true,
                     autoplayTimeout: 3000,
-                    autoplayHoverPause: true,
+                    // autoplayHoverPause: true,
+                    autoplayHoverPause: false, // Continue sliding even when mouse is over
                     items: 1, // Show 1 image at a time
-                    navText: ["<span class='prev'>&#10094;</span>", "<span class='next'>&#10095;</span>"]
+                    navText: ["<span class='prev'>&#10094;</span>", "<span class='next'>&#10095;</span>"],
+                    onInitialized: addProgressBar,
+                    onTranslate: resetProgressBar,
+                    onTranslated: startProgressBar
                 });
+
+                function addProgressBar() {
+                    var progressBar = $('<div class="progress-bar"><div class="progress"></div><div class="progress-number">3</div></div>');
+                    $('#main-slider').append(progressBar);
+                    startProgressBar();
+                }
+
+                function startProgressBar() {
+                    $('.progress').css({
+                        width: '100%',
+                        transition: 'width 3000ms linear'
+                    });
+                    rotateProgressNumber();
+                }
+
+                function resetProgressBar() {
+                    $('.progress').css({
+                        width: 0,
+                        transition: 'width 0s'
+                    });
+                    $('.progress-number').text('3');
+                }
+
+                function rotateProgressNumber() {
+                    var number = 3;
+                    var interval = setInterval(function() {
+                        number--;
+                        if (number <= 0) {
+                            clearInterval(interval);
+                        } else {
+                            $('.progress-number').text(number);
+                        }
+                    }, 1000);
+                }
             });
         </script>
 
@@ -72,6 +110,44 @@
 
             .owl-carousel .owl-nav button.owl-next {
                 right: 20px;
+            }
+
+            .progress-bar {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: 2px solid rgba(255, 255, 255, 0.7);
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .progress {
+                height: 100%;
+                background: rgba(255, 255, 255, 0.7);
+                width: 0;
+                transform-origin: center;
+                animation: rotateProgress 3s linear infinite;
+            }
+
+            .progress-number {
+                position: absolute;
+                font-size: 18px;
+                color: white;
+                z-index: 1;
+            }
+
+            @keyframes rotateProgress {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
             }
         </style>
 
@@ -169,7 +245,7 @@
                             <div class="icon-container">
                                 <a href="{{ route('subcategory', ['category_id' => $cat->id]) }}">
                                     <img src="{{ asset('uploads/category/' . $cat->image) }}" alt="{{ $cat->name }}"
-                                        class="category-img">
+                                        class="category-img mt-4">
                                 </a>
                             </div>
                             <h5 class="category-name">{{ $cat->name }}</h5>
@@ -226,7 +302,7 @@
                         /* Adjust image height for uniformity */
                         object-fit: cover;
                         /* Ensure the image fits within the circle */
-                        border-radius: 50%;
+                        /* border-radius: 50%; */
                         /* Circular image */
                         transition: transform 0.2s ease-in-out;
                         margin-bottom: 15px;
@@ -246,6 +322,7 @@
                         text-transform: capitalize;
                         line-height: 1.3;
                         margin-top: 15px;
+                        text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
                         /* Added space between name and image */
                     }
 
@@ -315,7 +392,7 @@
                             <div class="icon-container">
                                 <a href="{{ route('subcategory', ['category_id' => $cat->id]) }}">
                                     <img src="{{ asset('uploads/category/' . $cat->image) }}" alt="{{ $cat->name }}"
-                                        class="category-img">
+                                        class="category-img mt-4">
                                 </a>
                             </div>
                             <h5 class="category-name">{{ $cat->name }}</h5>
@@ -372,7 +449,7 @@
             /* Adjust image height for uniformity */
             object-fit: cover;
             /* Ensure the image fits within the circle */
-            border-radius: 50%;
+            /* border-radius: 50%; */
             /* Circular image */
             transition: transform 0.2s ease-in-out;
             margin-bottom: 15px;
@@ -507,8 +584,9 @@
         .brands-slider {
             position: relative;
             width: 100%;
+            height: 300px;
             overflow: hidden;
-            padding: 20px;
+            padding: 5px;
             background: #2561a8;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
@@ -641,7 +719,7 @@
                                 <div class="item mini-slider-wrapper">
                                     <div class="mini-slider-shadow"> <!-- Shadow Wrapper -->
                                         <img src="{{ asset('uploads/mini-slider/' . $image->image) }}" alt="Slider Image"
-                                            class="img-fluid mini-slider-image">
+                                            class="img-fluid mini-slider-image" style="width: 100vw;">
                                     </div>
                                 </div>
                             @endforeach
@@ -699,11 +777,16 @@
                 /* Shadow effect */
             }
 
+            /* .owl-carousel .owl-item img {
+                display: block;
+                width: 100vw;
+            } */
+
             /* Mini Slider Image Styling */
             .mini-slider-image {
                 width: 300px;
                 height: 300px;
-                object-fit: contain;
+                object-fit: cover;
                 /* border-radius: 10px; */
                 background-color: white;
             }
@@ -722,16 +805,11 @@
         </div>
     @endif
 
-
-
-
-
-
     {{--  Youtube card  --}}
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-4 mb-3">
-                <div class="card" style="width: 100%;">
+                <div class="card" style="width: 100%; height: auto;">
                     <div class="ratio ratio-16x9">
                         <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video"
                             allowfullscreen></iframe>
@@ -749,7 +827,7 @@
             </div>
 
             <div class="col-md-4 mb-3">
-                <div class="card" style="width: 100%;">
+                <div class="card" style="width: 100%; height: auto;">
                     <div class="ratio ratio-16x9">
                         <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video"
                             allowfullscreen></iframe>
@@ -767,7 +845,7 @@
             </div>
 
             <div class="col-md-4 mb-0">
-                <div class="card" style="width: 100%;">
+                <div class="card" style="width: 100%; height: auto;">
                     <div class="ratio ratio-16x9">
                         <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video"
                             allowfullscreen></iframe>
@@ -791,7 +869,7 @@
         <div class="row justify-content-center">
             <h2 class="text-center mb-4">Our Happy Customers</h2>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 h-100">
                 <div class="card text-center">
                     <div class="card-body">
                         <img src="{{ asset('uploads/customer.jpg') }}" alt="" class="rounded-circle"
@@ -806,7 +884,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 h-100">
                 <div class="card text-center">
                     <div class="card-body">
                         <img src="{{ asset('uploads/c2.jpg') }}" class="rounded-circle"
@@ -821,7 +899,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 h-100">
                 <div class="card text-center">
                     <div class="card-body">
                         <img src="{{ asset('uploads/c3.jpg') }}" class="rounded-circle"
@@ -848,6 +926,11 @@
             overflow: hidden;
             /* Prevents scroll bar */
         }
+
+        /* .col-md-4 {
+            height: auto;
+            overflow-x: auto;
+        } */
     </style>
 
     {{-- last 5 image  --}}

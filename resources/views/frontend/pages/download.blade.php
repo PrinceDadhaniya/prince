@@ -65,33 +65,6 @@
                     {{-- <span class="fw-bold fs-5">9,875</span> --}}
                 </div>
             </div>
-
-            {{-- <div class="col">
-                <div class="card shadow-sm border-0 p-3 d-flex flex-row align-items-center card-hover" onclick="window.location.href='{{ route('category.documents', ['category' => 'Datasheets']) }}'">
-                    <i class="bi bi-file-earmark fs-3 text-warning me-3"></i>
-                    <div class="flex-grow-1">
-                        <h5 class="mb-1">Datasheets</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card shadow-sm border-0 p-3 d-flex flex-row align-items-center card-hover" onclick="window.location.href='{{ route('category.documents', ['category' => 'Installation & User Guides']) }}'">
-                    <i class="bi bi-book fs-3 text-info me-3"></i>
-                    <div class="flex-grow-1">
-                        <h5 class="mb-1">Installation & User Guides</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card shadow-sm border-0 p-3 d-flex flex-row align-items-center card-hover" onclick="window.location.href='{{ route('category.documents', ['category' => 'Other Documentation']) }}'">
-                    <i class="bi bi-folder fs-3 text-secondary me-3"></i>
-                    <div class="flex-grow-1">
-                        <h5 class="mb-1">Other Documentation</h5>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 

@@ -17,8 +17,8 @@
 
             <!-- Quick Links -->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 footer-section">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Quick Links</h6>
-              <ul class="list-unstyled">
+              <h6 class="text-uppercase mb-4 font-weight-bold ms-2">Quick Links</h6>
+              <ul class="list-unstyled ms-2">
                 <li><a href="/" class="text-white">Home</a></li>
                 <li><a href="/about-us" class="text-white">About Us</a></li>
                 <li><a href="/contact-us" class="text-white">Contact Us</a></li>
@@ -28,8 +28,8 @@
 
             <!-- Top Categories -->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 footer-section">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Top Categories</h6>
-              <ul class="list-unstyled">
+              <h6 class="text-uppercase mb-4 font-weight-bold ms-2">Top Categories</h6>
+              <ul class="list-unstyled ms-2">
                 <?php if($categories->isEmpty()): ?>
                 <li>No categories available.</li>
                 <?php else: ?>
@@ -47,8 +47,8 @@
 
             <!-- Top Brands -->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 footer-section">
-              <h6 class="text-uppercase mb-4 font-weight-bold" >Top Brands</h6>
-              <ul class="list-unstyled">
+              <h6 class="text-uppercase mb-4 font-weight-bold ms-2">Top Brands</h6>
+              <ul class="list-unstyled ms-2">
                 <?php if($brands->isEmpty()): ?>
                 <li>No brands available.</li>
                 <?php else: ?>
@@ -66,11 +66,11 @@
 
             <!-- Contact Information -->
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 footer-section">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Contact Us</h6>
-              <p><i class="fas fa-home mr-3"></i> Rajkot, Gujarat, India</p>
-              <p><i class="fas fa-envelope mr-3"></i> support@nextgroup.in</p>
-              <p><i class="fas fa-phone mr-3"></i> +91 82005 01951</p>
-              <p>
+              <h6 class="text-uppercase mb-4 font-weight-bold ms-2">Contact Us</h6>
+              <p><i class="fas fa-home mr-3 ms-2"></i> Rajkot, Gujarat, India</p>
+              <p><i class="fas fa-envelope mr-3 ms-2"></i> support@nextgroup.in</p>
+              <p><i class="fas fa-phone mr-3 ms-2"></i> +91 82005 01951</p>
+              <p class="ms-2">
                 <i class="fas fa-map-marker-alt"></i>
                 Maruti Industrial Area, <br>
                 Ramwadi 2, Rolex Road, <br>

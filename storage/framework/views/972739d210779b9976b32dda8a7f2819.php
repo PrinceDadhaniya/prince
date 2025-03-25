@@ -67,8 +67,8 @@
                                             <td><?php echo e($document->id); ?></td>
                                             <td><?php echo e($document->document_name); ?></td>
                                             <td><?php echo e($document->document_type); ?></td>
-                                            <td><?php echo e($document->category ? $document->category->name : 'N/A'); ?></td>
-                                            <td><?php echo e($document->brand ? $document->brand->name : 'N/A'); ?></td>
+                                            <td><?php echo e($document->document_category); ?></td>
+                                            <td><?php echo e($document->document_brand); ?></td>
                                             <td>
                                                 <!-- Edit Button -->
                                                 <a href="<?php echo e(route('admin.documents-sections.edit', $document->id)); ?>" class="btn btn-success btn-sm">Edit</a>

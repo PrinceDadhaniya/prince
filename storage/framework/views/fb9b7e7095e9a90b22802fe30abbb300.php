@@ -11,46 +11,34 @@
                     <h5 class="fw-bold text-dark">Filter by</h5>
 
                     <!-- Search Filter -->
+                    
+
                     <div class="mb-3">
-                        <label class="fw-bold">Search Product</label>
+                        <label class="fw-bold">Search Document Section</label>
                         <input type="text" id="searchProduct" class="form-control" placeholder="Enter product name">
                     </div>
 
-                    <!-- Category Filter -->
+                    <!-- Document Type Filter -->
                     <div class="mb-3">
-                        <label class="fw-bold">Category</label>
-                        <ul class="list-unstyled">
-                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li>
-                                    <label class="d-flex align-items-center">
-                                        <input type="checkbox" name="category[]" value="<?php echo e($category->id); ?>" class="filter-checkbox category-checkbox me-2">
-                                        <span class="text-truncate"><?php echo e($category->name); ?></span>
-                                    </label>
-                                </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <label class="fw-bold">Document Type</label>
+                        <ul class="list-unstyled" id="document-type-list">
+                            
                         </ul>
                     </div>
 
-                    <!-- Subcategory Filter -->
+                    <!-- Document Category Filter -->
                     <div class="mb-3">
-                        <label class="fw-bold">Subcategory</label>
-                        <ul id="subcategory-list" class="list-unstyled text-truncate">
-                            <p class="text-muted">Select a category to see subcategories.</p>
+                        <label class="fw-bold">Document Category</label>
+                        <ul class="list-unstyled" id="document-category-list">
+                            
                         </ul>
                     </div>
 
-                    <!-- Brand Filter -->
+                    <!-- Document Brand Filter -->
                     <div class="mb-3">
-                        <label class="fw-bold">Brand</label>
-                        <ul class="list-unstyled">
-                            <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li>
-                                    <label class="d-flex align-items-center">
-                                        <input type="checkbox" name="brand[]" value="<?php echo e($brand->id); ?>" class="filter-checkbox brand-checkbox me-2">
-                                        <span><?php echo e($brand->name); ?></span>
-                                    </label>
-                                </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <label class="fw-bold">Document Brand</label>
+                        <ul class="list-unstyled" id="document-brand-list">
+                            
                         </ul>
                     </div>
 
@@ -73,9 +61,12 @@
                                     <p class="text-muted small"><strong>Brand:</strong> <?php echo e($document->product->brand->name ?? 'N/A'); ?></p>
                                 </div>
                                 <div class="document-footer text-center p-2">
-                                    <a href="<?php echo e($document->file_path); ?>" class="btn btn-primary btn-sm w-75">
+                                    <a href="<?php echo e(route('download.document', ['path' => $document->file_path])); ?>" class="btn btn-primary btn-sm w-75 download-btn" data-file-path="<?php echo e($document->file_path); ?>">
                                         <i class="fas fa-download"></i> Download
                                     </a>
+                                </div>
+                                <div class="document-preview mt-3" style="display: none;">
+                                    <iframe src="" width="100%" height="400px"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -90,6 +81,40 @@
 
     <script>
         $(document).ready(function() {
+            function fetchDocumentCategories() {
+                $.ajax({
+                    url: "<?php echo e(route('fetch.document.categories')); ?>",
+                    method: "GET",
+                    // dataType: "json",  // Ensure response is treated as JSON
+                    success: function(response) {
+                        let documentCategoryList = $('#document-category-list');
+                        documentCategoryList.empty();
+
+                        if (!response.documentCategories || response.documentCategories.length === 0) {
+                            documentCategoryList.html('<p class="text-muted">No document categories found.</p>');
+                            return;
+                        }
+
+                        response.documentCategories.forEach(documentCategory => {
+                            documentCategoryList.append(`
+                                <li>
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" name="documentcategory[]" value="${documentCategory.id}" class="filter-checkbox document-category-checkbox me-2">
+                                        <span class="text-truncate">${documentCategory.name}</span>
+                                    </label>
+                                </li>
+                            `);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        console.error("Status:", status);
+                        console.error("Response Text:", xhr.responseText);
+                        alert("Something went wrong while fetching document categories. Please try again.");
+                    }
+                });
+            }
+
             function fetchSubcategories(categoryIds) {
                 $.ajax({
                     url: "<?php echo e(route('fetch.subcategories')); ?>",
@@ -120,6 +145,68 @@
                     error: function(xhr, status, error) {
                         console.error("AJAX Error:", error);
                         alert("Something went wrong while fetching subcategories. Please try again.");
+                    }
+                });
+            }
+
+            function fetchDocumentTypes() {
+                $.ajax({
+                    url: "<?php echo e(route('fetch.document.types')); ?>",
+                    method: "GET",
+                    success: function(response) {
+                        let documentTypeList = $('#document-type-list');
+                        documentTypeList.empty();
+
+                        if (!response.documentTypes || response.documentTypes.length === 0) {
+                            documentTypeList.html('<p class="text-muted">No document types found.</p>');
+                            return;
+                        }
+
+                        response.documentTypes.forEach(documentType => {
+                            documentTypeList.append(`
+                                <li>
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" name="documenttype[]" value="${documentType.id}" class="filter-checkbox documenttype-checkbox me-2">
+                                        <span>${documentType.name}</span>
+                                    </label>
+                                </li>
+                            `);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        alert("Something went wrong while fetching document types. Please try again.");
+                    }
+                });
+            }
+
+            function fetchDocumentBrands() {
+                $.ajax({
+                    url: "<?php echo e(route('fetch.document.brands')); ?>",
+                    method: "GET",
+                    success: function(response) {
+                        let documentBrandList = $('#document-brand-list');
+                        documentBrandList.empty();
+
+                        if (!response.documentBrands || response.documentBrands.length === 0) {
+                            documentBrandList.html('<p class="text-muted">No document brands found.</p>');
+                            return;
+                        }
+
+                        response.documentBrands.forEach(documentBrand => {
+                            documentBrandList.append(`
+                                <li>
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" name="documentbrand[]" value="${documentBrand.id}" class="filter-checkbox documentbrand-checkbox me-2">
+                                        <span>${documentBrand.name}</span>
+                                    </label>
+                                </li>
+                            `);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        alert("Something went wrong while fetching document brands. Please try again.");
                     }
                 });
             }
@@ -176,9 +263,12 @@
                                                 <p class="text-muted small"><strong>Brand:</strong> ${brandName}</p>
                                             </div>
                                             <div class="document-footer text-center p-2">
-                                                <a href="${document.file_path}" class="btn btn-primary btn-sm w-75">
+                                                <a href="${document.file_path}" class="btn btn-primary btn-sm w-75 download-btn" data-file-path="${document.file_path}">
                                                     <i class="fas fa-download"></i> Download
                                                 </a>
+                                            </div>
+                                            <div class="document-preview mt-3" style="display: none;">
+                                                <iframe src="" width="100%" height="400px"></iframe>
                                             </div>
                                         </div>
                                     </div>
@@ -225,8 +315,24 @@
             $('#resetFilters').click(resetFilters);
 
             // Fetch all categories and subcategories on page load
-            let allCategories = <?php echo json_encode($categories->pluck('id'), 15, 512) ?>;
-            fetchSubcategories(allCategories);
+            fetchDocumentCategories();
+
+            // Fetch all document types on page load
+            fetchDocumentTypes();
+
+            // Fetch all document brands on page load
+            fetchDocumentBrands();
+
+            // Show document preview on download button click
+            $('.download-btn').click(function(event) {
+                event.preventDefault();
+                let filePath = $(this).data('file-path');
+                let documentCard = $(this).closest('.document-card');
+                let documentPreview = documentCard.find('.document-preview');
+
+                documentPreview.find('iframe').attr('src', filePath);
+                documentPreview.show();
+            });
         });
     </script>
     <style>

@@ -10,6 +10,7 @@
         <div class="row ">
             <div class="row">
                 <div class="col-md-6">
+                    @if($contactUsDetails)
                     <div class="card mb-3" style="margin-top: 50px;">
                         <div class="card-body">
                             <h5 class="card-title text-primary fs-3" style="text-align: left">NeXT SOLUTION</h5>
@@ -28,6 +29,7 @@
                             <p>{{ $contactUsDetails->email }}</p>
                         </div>
                     </div>
+                    @endif
                     <div class="d-flex gap-3" style="margin-top: 30px;">
                         <a href="#" class="text-primary fs-4"><i class="fab fa-facebook"></i></a>
                         <a href="#" class="text-primary fs-4"><i class="fab fa-linkedin"></i></a>

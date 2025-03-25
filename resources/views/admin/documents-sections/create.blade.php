@@ -45,12 +45,14 @@
         <div class="card-header">
             @php
                 $documentsSections = $documentsSections ?? null;
+                $documentCategories = $documentCategories ?? [];
+                $documentBrands = $documentBrands ?? []; // Ensure $documentBrands is defined
             @endphp
             <h5 class="mb-0">{{ $documentsSections ? 'Create Documents Sections' : 'Edit Documents Sections' }}
-            <a href="{{ url('admin/documents-sections')}}" class="btn btn-danger btn-sm text-white float-end">Back</a>
+                <a href="{{ url('admin/documents-sections') }}" class="btn btn-danger btn-sm text-white float-end">Back</a>
             </h5>
         </div>
-        <form action="{{ route('admin.documents-sections.store') }}" method="POST">
+        <form action="{{ route('admin.documents-sections.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="document_name" class="form-label mt-2">Document Name</label>
@@ -63,37 +65,40 @@
             <div class="document mb-3" id="document-0">
                 <label for="document_type" class="form-label">Document Type</label>
                 <select name="document_type" class="form-control" required>
-                    <option value="Software">Software</option>
-                    <option value="PDF">PDF</option>
-                    <option value="Driver">Driver</option>
+                    <option value="">Select Document Type</option>
+                    @foreach ($documentTypes as $documentType)
+                        <option value="{{ $documentType->name }}">{{ $documentType->name }}</option>
+                    @endforeach
                 </select>
-                @error('document_type')
+                <label for="documents" class="form-label mt-2">Document File</label>
+                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx" required>
+                @error('documents')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="form-group mb-3">
-                <label for="category_name">Document Category</label>
-                <select name="category_name" id="category_name" class="form-control" required>
-                    <option value="">Select Category</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->name }}">{{ $category->name }}</option>
+                <label for="document_category">Document Category</label>
+                <select name="document_category" id="document_category" class="form-control" required>
+                    <option value="">Select Document Category</option>
+                    @foreach ($documentCategories as $documentCategory)
+                        <option value="{{ $documentCategory->name }}">{{ $documentCategory->name }}</option>
                     @endforeach
                 </select>
-                @error('category_name')
+                @error('document_category')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="form-group mb-3">
-                <label for="brand_name">Document Brand</label>
-                <select name="brand_name" id="brand_name" class="form-control" required>
-                    <option value="">Select Brand</option>
-                    @foreach ($brands as $brand)
-                        <option value="{{ $brand->name }}">{{ $brand->name }}</option>
+                <label for="document_brand">Document Brand</label>
+                <select name="document_brand" id="document_brand" class="form-control" required>
+                    <option value="">Select Document Brand</option>
+                    @foreach ($documentBrands as $documentBrand)
+                        <option value="{{ $documentBrand->name }}">{{ $documentBrand->name }}</option>
                     @endforeach
                 </select>
-                @error('brand_name')
+                @error('document_brand')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

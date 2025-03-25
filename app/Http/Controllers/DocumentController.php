@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DocumentCategory;
 
 class DocumentController extends Controller
 {
@@ -20,6 +21,12 @@ class DocumentController extends Controller
         })->get();
 
         return view('frontend.pages.category-documents', compact('category', 'documents'));
+    }
+
+    public function fetchDocumentCategories()
+    {
+        $documentCategories = DocumentCategory::all();
+        return response()->json(['documentCategories' => $documentCategories]);
     }
 
     # ...existing code...

@@ -47,7 +47,7 @@
 <!-- Mission, Vision, and Goals Section -->
 <h2 class="text-center mb-4">Our Mission, Vision, and Goals</h2>
 <div class="row">
-    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+    <div class="col-md-4 mb-4 d-flex align-items-stretch h-100">
         <div class="card shadow w-100">
             <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
                 <img src="{{ asset($aboutSettings->mission_image) }}" class="img-fluid rounded" alt="{{ $aboutSettings->mission_title }}" style="object-fit: cover; max-height: 100%;">
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+    <div class="col-md-4 mb-4 d-flex align-items-stretch h-100">
         <div class="card shadow w-100">
             <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
                 <img src="{{ asset($aboutSettings->vision_image) }}" class="img-fluid rounded" alt="{{ $aboutSettings->vision_title }}" style="object-fit: cover; max-height: 100%;">
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+    <div class="col-md-4 mb-4 d-flex align-items-stretch h-100">
         <div class="card shadow w-100">
             <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
                 <img src="{{ asset($aboutSettings->goals_image) }}" class="img-fluid rounded" alt="{{ $aboutSettings->goals_title }}" style="object-fit: cover; max-height: 100%;">

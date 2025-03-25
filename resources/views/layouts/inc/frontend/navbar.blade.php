@@ -21,59 +21,23 @@
         <div class="d-flex flex-grow-1 justify-content-center px-3">
             <form class="d-flex w-100" role="search">
                 <input class="form-control mt-3 w-100" type="search" placeholder="Search" aria-label="Search"
-                    style="height: 45px;" id="search-input" autocomplete="off">
-                <span class="material-icons mt-4" style="font-size: 28px;;">search</span>
+                    style="height: 45px;" id="search-input" autocomplete="off" >
+                {{-- <span class="material-icons mt-4" style="font-size: 28px;">search</span>  --}}
             </form>
             <div id="search-suggestions" class="list-group">
                 <!-- Search suggestions will be displayed here -->
             </div>
         </div>
 
+
+
         <!-- Admin, Download Button, and Dropdown (Right Side) -->
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center mt-2">
 
             <!-- Download Button -->
             <a href="/download" class="btn btn-dark d-flex align-items-center me-2">
-                <i class="fas fa-download me-2"></i> Download Now
+                <i class="fas fa-download me-2"></i> Download
             </a>
-
-            <!-- Currency Dropdown -->
-            <div class="dropdown me-3">
-                <button class="btn btn-dark dropdown-toggle" type="button" id="currencyDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="currency-flag-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_India.svg" alt="INR Flag"
-                            height="16" width="24" style="margin-right: 5px;">
-                    </span>
-                    INR
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="currencyDropdown">
-                    <li><a class="dropdown-item active" href="#">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_India.svg"
-                                alt="INR Flag" height="16" width="24" style="margin-right: 5px;"> INR
-                        </a></li>
-                    <li><a class="dropdown-item" href="#">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg"
-                                alt="USD Flag" height="16" width="24" style="margin-right: 5px;"> USD
-                        </a></li>
-                    <li><a class="dropdown-item" href="#">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg"
-                                alt="EUR Flag" height="16" width="24" style="margin-right: 5px;"> EUR
-                        </a></li>
-                    <li><a class="dropdown-item" href="#">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg"
-                                alt="GBP Flag" height="16" width="24" style="margin-right: 5px;"> GBP
-                        </a></li>
-                </ul>
-            </div>
-
-            <!-- Cart Icon with Badge -->
-            <span class="position-relative">
-                <i class="fas fa-shopping-cart" style="font-size: 24px; color:#00000;"
-                    onclick="window.location.href='{{ url('/cart') }}'"></i>
-                <span id="cart-badge"
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-            </span>
 
         </div>
 
@@ -139,6 +103,7 @@
                 <div class="row mt-4">
                     <!-- Parent Categories Section -->
                     <div class="col-md-4 category-section">
+                    {{-- <div class="col-md-4 category-section" style="position: sticky; top: 0; height: 100vh; overflow-y: auto;"> --}}
                         <h4 class="text-info fw-bold" style="border-bottom: 3px solid aqua;">Products & Services</h4>
                         <div class="category-container" id="parent-container"></div>
                     </div>
@@ -314,19 +279,20 @@
     function appendToContainer(container, id, name, clickHandler, hasChildren) {
         const box = document.createElement('div');
         box.className = 'subcategory-box d-flex align-items-center justify-content-between';
+        box.onclick = () => {
+            window.location.href = `/category/${id}`;
+        };
 
         const nameElement = document.createElement('span');
         nameElement.innerText = name;
         nameElement.style.cursor = 'pointer';
-        nameElement.onclick = () => {
-            window.location.href = `/category/${id}`;
-        };
 
         box.appendChild(nameElement);
 
         if (hasChildren) {
             const icon = document.createElement('i');
-            icon.className = 'fa fa-angle-right ms-2';
+            // icon.className = 'fa fa-angle-right ms-2';
+            icon.className = 'fa fa-square ms-2';
             icon.style.cursor = 'pointer';
             icon.onclick = (event) => {
                 event.stopPropagation();
@@ -401,17 +367,22 @@
         padding: 5px;
     }
 
+    element.style {
+        width: 100%;
+    }
+
     #breadcrumb-p span {
         color: #fff;
-        background-color: #00796b;
+        /* background-color: #00796b; */
         padding: 3px 8px;
         border-radius: 5px;
+        font-size: 12px;
     }
 
     #breadcrumb-p span.selected {
-        background-color: #004d40;
         /* Darker color for selected breadcrumb */
-        color: #ffd600;
+        color: #0cc;
+        font-size: 12px;
         /* Yellow color for selected breadcrumb */
     }
 
@@ -460,7 +431,8 @@
     }
 
     .subcategory-box i {
-        color: yellowgreen;
+        /* color: yellowgreen; */
+        color: #2561a8;
         font-size: 1rem;
         transition: transform 0.2s ease-in-out;
     }
@@ -548,6 +520,11 @@
 
     }
 
+    .modal-fullscreen .modal-content {
+        height: 100%;
+        margin-top: -11px;
+    }
+
     /* Ensure the modal body handles overflow */
     .modal-body {
         background-color: #1a1a1a !important;
@@ -571,7 +548,7 @@
 
     /* Ensure category container does not shrink */
     .category-container {
-        max-height: 60vh;
+        /* max-height: 60vh; */
         overflow-y: auto;
     }
 

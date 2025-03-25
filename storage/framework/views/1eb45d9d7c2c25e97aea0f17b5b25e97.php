@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title','Contact Us Details'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -47,4 +45,5 @@
     </div>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\prince\New Project\prince (3) (1)\prince\resources\views/admin/contact-us-details/index.blade.php ENDPATH**/ ?>

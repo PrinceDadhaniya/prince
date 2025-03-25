@@ -43,7 +43,7 @@
         <h2>Edit Document</h2>
         <div class="card-header">
             <h5 class="mb-0">Edit Documents Sections
-            <a href="{{ url('admin/documents-sections')}}" class="btn btn-danger btn-sm text-white float-end">Back</a>
+                <a href="{{ url('admin/documents-sections') }}" class="btn btn-danger btn-sm text-white float-end">Back</a>
             </h5>
         </div>
         <form action="{{ route('admin.documents-sections.update', $document->id) }}" method="POST">
@@ -51,39 +51,55 @@
             @method('PUT')
             <div class="mb-3">
                 <label for="document_name" class="form-label">Document Name</label>
-                <input type="text" class="form-control" id="document_name" name="document_name" value="{{ $document->document_name }}" required>
+                <input type="text" class="form-control" id="document_name" name="document_name"
+                    value="{{ $document->document_name }}" required>
             </div>
 
             <div class="document mb-3" id="document-0">
-                <label for="documents[0][document_type]" class="form-label">Document Type</label>
-                <select name="documents[0][document_type]" class="form-control" required>
-                    <option value="Software" {{ $document->document_type == 'Software' ? 'selected' : '' }}>Software</option>
-                    <option value="PDF" {{ $document->document_type == 'PDF' ? 'selected' : '' }}>PDF</option>
-                    <option value="Driver" {{ $document->document_type == 'Driver' ? 'selected' : '' }}>Driver</option>
-                </select>
-            </div>
-
-            <div class="form-group mb-4">
-                <label for="brand_id">Brand</label>
-                <select name="brand_id" id="brand_id" class="form-control">
-                    <option value="">Select Brand</option>
-                    @foreach ($brands as $brand)
-                        <option value="{{ $brand->id }}" {{ $document->brand_id == $brand->id ? 'selected' : '' }}>
-                            {{ $brand->name }}
-                        </option>
+                <label for="document_type" class="form-label">Document Type</label>
+                <select name="document_type" id="document_type" class="form-control" required>
+                    <option value="">Select Document Type</option>
+                    @foreach ($documentTypes as $documentType)
+                        <option value="{{ $documentType->name }}"
+                            {{ $document->document_type == $documentType->name ? 'selected' : '' }}>
+                            {{ $documentType->name }}</option>
                     @endforeach
                 </select>
+                <label for="documents" class="form-label mt-2">Document File</label>
+                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx" required>
+                @error('documents')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <div class="form-group">
-                <label for="category_id">Category</label>
-                {{-- <input type="text" name="category_id" class="form-control" id="category_id" value="{{ $document->category_id }}" required> --}}
-                <select name="category_name" id="category_name" class="form-control" required>
-                    <option value="">Select Category</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->name }}">{{ $category->name }}</option>
+            <div class="form-group mb-3">
+                <label for="document_brand">Document Brand</label>
+                <select name="document_brand" id="document_brand" class="form-control" required>
+                    <option value="">Select Document Brand</option>
+                    @foreach ($documentBrands as $documentBrand)
+                        <option value="{{ $documentBrand->name }}"
+                            {{ $document->document_brand == $documentBrand->name ? 'selected' : '' }}>
+                            {{ $documentBrand->name }}</option>
                     @endforeach
                 </select>
+                @error('document_brand')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="document_category">Document Category</label>
+                <select name="document_category" id="document_category" class="form-control" required>
+                    <option value="">Select Document Category</option>
+                    @foreach ($documentCategories as $documentCategory)
+                        <option value="{{ $documentCategory->name }}"
+                            {{ $document->document_category == $documentCategory->name ? 'selected' : '' }}>
+                            {{ $documentCategory->name }}</option>
+                    @endforeach
+                </select>
+                @error('document_category')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -93,10 +109,11 @@
 
             <div class="form-group">
                 <label for="file_path">File Path</label>
-                <input type="text" name="file_path" class="form-control" id="file_path" value="{{ $document->file_path }}" required>
+                <input type="text" name="file_path" class="form-control" id="file_path"
+                    value="{{ $document->file_path }}" required>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Update</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-3">Update</button>
         </form>
     </div>
 @endsection

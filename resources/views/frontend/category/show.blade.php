@@ -63,8 +63,8 @@
                         > {{ $category->name }}
                     </p>
                     <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <h1 class="mb-3">{{ $category->name }}</h1>
+                        <div class="col-md-9">
+                            <h1 class="mb-3" style="font-size: 28px; font-wait-bold;">{{ $category->name }}</h1>
                             <h3 style="color: #2561a8; padding-bottom:10px;">{{ $category->description }}</h3>
                             <p>{{ $category->slug }}</p>
                             <div class="d-flex mt-3">
@@ -74,9 +74,9 @@
                                     style="border: 1px solid black; margin-left:20px;"><b>Contact Support</b></a>
                             </div>
                         </div>
-                        <div class="col-md-6 text-end">
+                        <div class="col-md-1 text-end">
                             <img src="{{ asset('uploads/category/' . $category->image) }}" alt="{{ $category->name }}"
-                                style="width: 300px;">
+                                style="width: 250px;">
                         </div>
                     </div>
 

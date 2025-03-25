@@ -3,7 +3,8 @@
     <div>
         <div class="logo-wrapper">
             <a href="index.html">
-                <img class="img-fluid for-light" style="height: 52px;" src="{{ asset('assets/silder/logo.jpg') }}" alt="">
+                <img class="img-fluid for-light" style="height: 52px;" src="{{ asset('assets/silder/logo.jpg') }}"
+                    alt="">
                 {{-- <img class="img-fluid for-dark" src="{{ asset('admin/logo/logo_dark.png') }}" alt=""> --}}
 
             </a>
@@ -145,12 +146,13 @@
 
 
 
-                    {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i data-feather="airplay"></i><span>Setting</span></a>
-              <ul class="sidebar-submenu">
-                <li><a href="{{ url('admin/settings/about-us' )}}">About-Us</a></li>
-                <li><a href="{{ url('admin/contact-us' )}}">Contact-Us</a></li>
-              </ul>
-            </li> --}}
+                    {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                                data-feather="airplay"></i><span>Setting</span></a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ url('admin/settings/about-us') }}">About-Us</a></li>
+                            <li><a href="{{ url('admin/contact-us') }}">Contact-Us</a></li>
+                        </ul>
+                    </li> --}}
 
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"
                             data-bs-original-title="" title="">
@@ -165,7 +167,7 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: none;">
                             <li><a href="{{ url('admin/settings/about-us') }}">About-Us</a></li>
-                            <li><a href="{{ url('admin/contact-us') }}">Contact-Us</a></li>
+                            {{-- <li><a href="{{ url('admin/contact-us') }}">Contact-Us</a></li> --}}
                             {{-- <li><a href="{{ url('admin/contact-us-details') }}">Contact-us-Details</a></li> --}}
                             <li><a href="{{ url('admin/contact-us-details/index') }}">View Contact-us-Details</a></li>
                             <li><a class="submenu-title" href="#" data-bs-original-title=""
@@ -182,9 +184,9 @@
                     </li>
 
 
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                    <li class="sidebar-list mb-4"><a class="sidebar-link sidebar-title" href="#"><i
                                 data-feather="airplay"></i><span>Documents Sections</span></a>
-                        <ul class="sidebar-submenu">
+                        <ul class="sidebar-submenu mb-4">
                             <li><a href="{{ route('admin.documents-sections.create') }}">Document-Add</a></li>
                             <li><a href="{{ route('admin.documents-sections.index') }}">Document-View</a></li>
                         </ul>

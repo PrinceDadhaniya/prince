@@ -64,8 +64,8 @@
 
                     </p>
                     <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <h1 class="mb-3"><?php echo e($category->name); ?></h1>
+                        <div class="col-md-9">
+                            <h1 class="mb-3" style="font-size: 28px; font-wait-bold;"><?php echo e($category->name); ?></h1>
                             <h3 style="color: #2561a8; padding-bottom:10px;"><?php echo e($category->description); ?></h3>
                             <p><?php echo e($category->slug); ?></p>
                             <div class="d-flex mt-3">
@@ -75,9 +75,9 @@
                                     style="border: 1px solid black; margin-left:20px;"><b>Contact Support</b></a>
                             </div>
                         </div>
-                        <div class="col-md-6 text-end">
+                        <div class="col-md-1 text-end">
                             <img src="<?php echo e(asset('uploads/category/' . $category->image)); ?>" alt="<?php echo e($category->name); ?>"
-                                style="width: 300px;">
+                                style="width: 250px;">
                         </div>
                     </div>
 

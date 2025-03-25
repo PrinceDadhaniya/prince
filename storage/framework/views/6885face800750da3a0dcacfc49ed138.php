@@ -3,7 +3,8 @@
     <div>
         <div class="logo-wrapper">
             <a href="index.html">
-                <img class="img-fluid for-light" style="height: 52px;" src="<?php echo e(asset('assets/silder/logo.jpg')); ?>" alt="">
+                <img class="img-fluid for-light" style="height: 52px;" src="<?php echo e(asset('assets/silder/logo.jpg')); ?>"
+                    alt="">
                 
 
             </a>
@@ -127,7 +128,7 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: none;">
                             <li><a href="<?php echo e(url('admin/settings/about-us')); ?>">About-Us</a></li>
-                            <li><a href="<?php echo e(url('admin/contact-us')); ?>">Contact-Us</a></li>
+                            
                             
                             <li><a href="<?php echo e(url('admin/contact-us-details/index')); ?>">View Contact-us-Details</a></li>
                             <li><a class="submenu-title" href="#" data-bs-original-title=""
@@ -144,9 +145,9 @@
                     </li>
 
 
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                    <li class="sidebar-list mb-4"><a class="sidebar-link sidebar-title" href="#"><i
                                 data-feather="airplay"></i><span>Documents Sections</span></a>
-                        <ul class="sidebar-submenu">
+                        <ul class="sidebar-submenu mb-4">
                             <li><a href="<?php echo e(route('admin.documents-sections.create')); ?>">Document-Add</a></li>
                             <li><a href="<?php echo e(route('admin.documents-sections.index')); ?>">Document-View</a></li>
                         </ul>

@@ -155,4 +155,10 @@ class DocumentTypeController extends Controller
 
         return redirect()->route('admin.documents-type.index')->with('message', 'Document Type deleted successfully.');
     }
+
+    public function fetchDocumentTypes()
+    {
+        $documentTypes = DocumentType::all();
+        return response()->json(['documentTypes' => $documentTypes]);
+    }
 }

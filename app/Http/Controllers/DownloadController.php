@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use App\Models\DocumentCategory; // Ensure this line is present
 
 class DownloadController extends Controller
 {
@@ -14,6 +15,7 @@ class DownloadController extends Controller
         // Fetch Categories, Subcategories, and Brands
         $categories = Category::whereNull('parent_id')->get();
         $brands = Brand::all();
+        $documentCategories = DocumentCategory::all(); // Ensure this line is present
 
         // Start Query
         $query = Document::with(['product.category', 'product.brand']);
@@ -55,7 +57,7 @@ class DownloadController extends Controller
         }
 
         // Return View with Data
-        return view('frontend.pages.download', compact('categories', 'brands', 'documents'));
+        return view('frontend.pages.download', compact('categories', 'brands', 'documents', 'documentCategories')); // Ensure documentCategories is passed to the view
     }
 
     public function fetchSubcategories(Request $request)
@@ -78,7 +80,7 @@ class DownloadController extends Controller
 
         // Filter by Subcategory
         if ($request->has('subcategory') && !empty($request->subcategory)) {
-            $query->whereHas('product', function ($q) use ($request) {
+            $query->whereHas('product.category', function ($q) use ($request) {
                 $q->whereIn('category_id', $request->subcategory);
             });
         }

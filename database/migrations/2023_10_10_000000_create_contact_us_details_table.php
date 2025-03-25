@@ -7,13 +7,15 @@ class CreateContactUsDetailsTable extends Migration
 {
     public function up()
     {
-        Schema::create('contact_us_details', function (Blueprint $table) {
-            $table->id();
-            $table->string('address');
-            $table->string('phone');
-            $table->string('email');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('contact_us_details')) {
+            Schema::create('contact_us_details', function (Blueprint $table) {
+                $table->id();
+                $table->string('address');
+                $table->string('phone');
+                $table->string('email');
+                $table->timestamps();
+            });
+        }
     }
 
     public function down()

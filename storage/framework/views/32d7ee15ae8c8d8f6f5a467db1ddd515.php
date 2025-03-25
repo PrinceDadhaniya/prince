@@ -42,7 +42,7 @@
         <h2>Edit Document</h2>
         <div class="card-header">
             <h5 class="mb-0">Edit Documents Sections
-            <a href="<?php echo e(url('admin/documents-sections')); ?>" class="btn btn-danger btn-sm text-white float-end">Back</a>
+                <a href="<?php echo e(url('admin/documents-sections')); ?>" class="btn btn-danger btn-sm text-white float-end">Back</a>
             </h5>
         </div>
         <form action="<?php echo e(route('admin.documents-sections.update', $document->id)); ?>" method="POST">
@@ -50,40 +50,76 @@
             <?php echo method_field('PUT'); ?>
             <div class="mb-3">
                 <label for="document_name" class="form-label">Document Name</label>
-                <input type="text" class="form-control" id="document_name" name="document_name" value="<?php echo e($document->document_name); ?>" required>
+                <input type="text" class="form-control" id="document_name" name="document_name"
+                    value="<?php echo e($document->document_name); ?>" required>
             </div>
 
             <div class="document mb-3" id="document-0">
-                <label for="documents[0][document_type]" class="form-label">Document Type</label>
-                <select name="documents[0][document_type]" class="form-control" required>
-                    <option value="Software" <?php echo e($document->document_type == 'Software' ? 'selected' : ''); ?>>Software</option>
-                    <option value="PDF" <?php echo e($document->document_type == 'PDF' ? 'selected' : ''); ?>>PDF</option>
-                    <option value="Driver" <?php echo e($document->document_type == 'Driver' ? 'selected' : ''); ?>>Driver</option>
-                </select>
-            </div>
-
-            <div class="form-group mb-4">
-                <label for="brand_id">Brand</label>
-                <select name="brand_id" id="brand_id" class="form-control">
-                    <option value="">Select Brand</option>
-                    <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($brand->id); ?>" <?php echo e($document->brand_id == $brand->id ? 'selected' : ''); ?>>
-                            <?php echo e($brand->name); ?>
-
-                        </option>
+                <label for="document_type" class="form-label">Document Type</label>
+                <select name="document_type" id="document_type" class="form-control" required>
+                    <option value="">Select Document Type</option>
+                    <?php $__currentLoopData = $documentTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documentType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($documentType->name); ?>"
+                            <?php echo e($document->document_type == $documentType->name ? 'selected' : ''); ?>>
+                            <?php echo e($documentType->name); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
+                <label for="documents" class="form-label mt-2">Document File</label>
+                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx" required>
+                <?php $__errorArgs = ['documents'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
-            <div class="form-group">
-                <label for="category_id">Category</label>
-                
-                <select name="category_name" id="category_name" class="form-control" required>
-                    <option value="">Select Category</option>
-                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($category->name); ?>"><?php echo e($category->name); ?></option>
+            <div class="form-group mb-3">
+                <label for="document_brand">Document Brand</label>
+                <select name="document_brand" id="document_brand" class="form-control" required>
+                    <option value="">Select Document Brand</option>
+                    <?php $__currentLoopData = $documentBrands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documentBrand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($documentBrand->name); ?>"
+                            <?php echo e($document->document_brand == $documentBrand->name ? 'selected' : ''); ?>>
+                            <?php echo e($documentBrand->name); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
+                <?php $__errorArgs = ['document_brand'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="document_category">Document Category</label>
+                <select name="document_category" id="document_category" class="form-control" required>
+                    <option value="">Select Document Category</option>
+                    <?php $__currentLoopData = $documentCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documentCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($documentCategory->name); ?>"
+                            <?php echo e($document->document_category == $documentCategory->name ? 'selected' : ''); ?>>
+                            <?php echo e($documentCategory->name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                <?php $__errorArgs = ['document_category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="form-group">
@@ -93,10 +129,11 @@
 
             <div class="form-group">
                 <label for="file_path">File Path</label>
-                <input type="text" name="file_path" class="form-control" id="file_path" value="<?php echo e($document->file_path); ?>" required>
+                <input type="text" name="file_path" class="form-control" id="file_path"
+                    value="<?php echo e($document->file_path); ?>" required>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Update</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-3">Update</button>
         </form>
     </div>
 <?php $__env->stopSection(); ?>
