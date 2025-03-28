@@ -15,7 +15,7 @@ class DocumentsSectionsController extends Controller
 
     public function index()
     {
-        $documents = Document::with('documentCategory', 'documentBrand')->get();
+        $documents = DocumentsSection::with('documentType', 'documentCategory', 'documentBrand')->get();
         return view('frontend.pages.category-documents', compact('documents'));
     }
 

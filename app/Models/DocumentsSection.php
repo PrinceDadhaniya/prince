@@ -51,4 +51,19 @@ class DocumentsSection extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function documentType()
+    {
+        return $this->belongsTo(DocumentType::class, 'document_type', 'id');
+    }
+
+    public function documentCategory()
+    {
+        return $this->belongsTo(DocumentCategory::class, 'document_category', 'id');
+    }
+
+    public function documentBrand()
+    {
+        return $this->belongsTo(DocumentBrand::class, 'document_brand', 'id');
+    }
 }

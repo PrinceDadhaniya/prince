@@ -67,7 +67,7 @@
                 <select name="document_type" class="form-control" required>
                     <option value="">Select Document Type</option>
                     @foreach ($documentTypes as $documentType)
-                        <option value="{{ $documentType->name }}">{{ $documentType->name }}</option>
+                        <option value="{{ $documentType->id }}">{{ $documentType->name }}</option>
                     @endforeach
                 </select>
                 <label for="documents" class="form-label mt-2">Document File</label>
@@ -82,7 +82,7 @@
                 <select name="document_category" id="document_category" class="form-control" required>
                     <option value="">Select Document Category</option>
                     @foreach ($documentCategories as $documentCategory)
-                        <option value="{{ $documentCategory->name }}">{{ $documentCategory->name }}</option>
+                        <option value="{{ $documentCategory->id }}">{{ $documentCategory->name }}</option>
                     @endforeach
                 </select>
                 @error('document_category')
@@ -95,7 +95,7 @@
                 <select name="document_brand" id="document_brand" class="form-control" required>
                     <option value="">Select Document Brand</option>
                     @foreach ($documentBrands as $documentBrand)
-                        <option value="{{ $documentBrand->name }}">{{ $documentBrand->name }}</option>
+                        <option value="{{ $documentBrand->id }}">{{ $documentBrand->name }}</option>
                     @endforeach
                 </select>
                 @error('document_brand')

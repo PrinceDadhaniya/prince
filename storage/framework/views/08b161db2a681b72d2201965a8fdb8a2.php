@@ -36,40 +36,36 @@
         <div class="container my-5">
             <h3 class="mb-4">Explore by Document Category</h3>
 
-            <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="row row-cols-1 row-cols-md-3 g-3" name="document-categories">
                 <div class="col">
-                    <a href="<?php echo e(route('category.documents', ['category' => 'cad-drawings-curves'])); ?>"
+                    <a href="<?php echo e(url('category/Category & Documents/documents')); ?>"
                         class="text-decoration-none text-dark">
                         <div class="card shadow-sm border-0 p-3 d-flex flex-row align-items-center card-hover">
                             <i class="bi bi-box-seam fs-3 text-primary me-3"></i>
                             <div class="flex-grow-1">
-                                <h5 class="mb-1">Category</h5>
+                                <h5 class="mb-1">Category & Documents</h5>
                             </div>
-                            
                         </div>
                     </a>
                 </div>
 
                 <div class="col">
                     <div class="card shadow-sm border-0 p-3 d-flex flex-row align-items-center card-hover"
-                        onclick="window.location.href='<?php echo e(route('category.documents', ['category' => 'catalogs-brochures'])); ?>'">
+                        onclick="window.location.href='<?php echo e(url('category/Catalogs & Brochures/documents')); ?>'">
                         <i class="bi bi-file-earmark-text fs-3 text-success me-3"></i>
                         <div class="flex-grow-1">
                             <h5 class="mb-1">Catalogs & Brochures</h5>
-                            
                         </div>
-                        
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="card shadow-sm border-0 p-3 d-flex flex-row align-items-center card-hover"
-                        onclick="window.location.href='<?php echo e(route('category.documents', ['category' => 'conformity-assessments'])); ?>'">
+                        onclick="window.location.href='<?php echo e(url('category/Conformity Assessments/documents')); ?>'">
                         <i class="bi bi-clipboard-check fs-3 text-danger me-3"></i>
                         <div class="flex-grow-1">
                             <h5 class="mb-1">Conformity Assessments</h5>
                         </div>
-                        
                     </div>
                 </div>
             </div>

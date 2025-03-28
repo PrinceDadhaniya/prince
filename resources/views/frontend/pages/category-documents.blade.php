@@ -4,7 +4,9 @@
 
 @section('content')
     <div class="container py-4">
-        <h2 class="mb-3 text-primary fw-bold text-center">Download Documents</h2>
+        <h2 class="mb-3 text-primary fw-bold text-center" id="sectionTitle">
+            {{ $fileName ?? request('category', 'Download Documents') }}
+        </h2>
 
         <div class="row">
             <!-- Filters (Left Side) -->

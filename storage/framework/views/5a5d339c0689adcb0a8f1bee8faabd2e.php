@@ -69,19 +69,14 @@
                                 <?php endif; ?>
                             </div>
 
-                            <!-- Product Description -->
-                            
-
                             <!-- Product Serial Number -->
                             <div class="mb-3">
                                 <h6 class="fw-bold">Serial Number</h6>
                                 <p><?php echo e($product->serial_number); ?></p>
                             </div>
 
-                            <!-- Actions -->
-                            
-
-                            <div class="d-flex gap-3 mt-4">
+                            <!-- Sticky Actions Section -->
+                            <div class="d-flex gap-3 mt-4 sticky" style="top: 10px; z-index: 1000; background: white; padding: 10px;">
                                 <a href="#" class="btn btn-primary flex-fill" id="add-to-cart">Add to My Products</a>
                                 <input type="checkbox" class="form-check-input ms-3" id="compareCheck">Compare
                                 <button class="btn btn-outline-dark flex-fill">Buy Online</button>

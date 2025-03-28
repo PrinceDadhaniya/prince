@@ -290,15 +290,32 @@
         box.appendChild(nameElement);
 
         if (hasChildren) {
+            const iconContainer = document.createElement('div');
+            iconContainer.style.cssText = `
+                width: 20px;
+                height: 20px;
+                background-color: #2561a8;
+                border-radius: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 8px;
+            `;
+
             const icon = document.createElement('i');
-            icon.className = 'fa fa-angle-right ms-2';
-            // icon.className = 'fa fa-square ms-2';
-            icon.style.cursor = 'pointer';
-            icon.onclick = (event) => {
+            icon.className = 'fas fa-angle-right';
+            icon.style.cssText = `
+                color: white;
+                font-size: 12px;
+            `;
+
+            iconContainer.appendChild(icon);
+            iconContainer.onclick = (event) => {
                 event.stopPropagation();
                 clickHandler();
             };
-            box.appendChild(icon);
+
+            box.appendChild(iconContainer);
         }
 
         container.appendChild(box);
