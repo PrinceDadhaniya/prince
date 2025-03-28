@@ -291,8 +291,8 @@
 
         if (hasChildren) {
             const icon = document.createElement('i');
-            // icon.className = 'fa fa-angle-right ms-2';
-            icon.className = 'fa fa-square ms-2';
+            icon.className = 'fa fa-angle-right ms-2';
+            // icon.className = 'fa fa-square ms-2';
             icon.style.cursor = 'pointer';
             icon.onclick = (event) => {
                 event.stopPropagation();
@@ -357,6 +357,7 @@
 
     .navbar {
         background-color: #2561a8;
+        /* position: sticky; */
     }
 
     #breadcrumb-p {
@@ -411,7 +412,7 @@
     .modal-body {
         scrollbar-width: thin;
         /* Thinner scrollbar */
-        scrollbar-color: #2561a8 #333;
+        /* scrollbar-color: #2561a8 #333; */
         /* Red thumb and dark track */
     }
 
@@ -533,6 +534,7 @@
         overflow-x: auto;
         /* Allow horizontal scroll */
         overflow-y: auto;
+        /* overflow: hidden; */
         /* Allow vertical scroll */
     }
 
@@ -549,7 +551,7 @@
     /* Ensure category container does not shrink */
     .category-container {
         /* max-height: 60vh; */
-        overflow-y: auto;
+        overflow: hidden;
     }
 
     /* Ensure modal header stays at the top */

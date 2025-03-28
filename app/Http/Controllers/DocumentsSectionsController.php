@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class DocumentsSectionsController extends Controller
 {
+    // public function index()
+    // {
+    //     $documents = Document::with('category', 'brand')->get();
+    //     return view('admin.documents-sections.index', compact('documents'));
+    // }
+
     public function index()
     {
-        $documents = Document::with('category', 'brand')->get();
-        return view('admin.documents-sections.index', compact('documents'));
+        $documents = Document::with('documentCategory', 'documentBrand')->get();
+        return view('frontend.pages.category-documents', compact('documents'));
     }
 
     public function create()

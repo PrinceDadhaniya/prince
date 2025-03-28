@@ -387,4 +387,8 @@ Route::get('/fetch-document-types', [DocumentTypeController::class, 'fetchDocume
 
 Route::get('/fetch-document-categories', [DocumentController::class, 'fetchDocumentCategories'])->name('fetch.document.categories');
 
+// Route::get('/fetch-document-categories', [DocumentCategoryController::class, 'fetchDocumentCategories'])->name('fetch.document.categories');
+
 Route::get('/fetch-document-brands', [DocumentBrandController::class, 'fetchDocumentBrands'])->name('fetch.document.brands');
+
+Route::get('/fetch-document-categories', [App\Http\Controllers\Admin\DocumentCategoryController::class, 'fetchDocumentCategories'])->name('fetch.document.categories');

@@ -189,4 +189,10 @@ class DocumentCategoryController extends Controller
             'products' => $products,
         ]);
     }
+
+    public function fetchDocumentCategories()
+    {
+        $categories = DocumentCategory::select('id', 'name')->get(); // Fetch only 'id' and 'name'
+        return response()->json(['documentCategories' => $categories]);
+    }
 }

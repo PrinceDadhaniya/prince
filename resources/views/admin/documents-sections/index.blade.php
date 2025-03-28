@@ -23,21 +23,21 @@
             </div>
         </div>
     </div>
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="container-fluid">
         <div class="row">
@@ -72,7 +72,8 @@
                                             <td>{{ $document->document_brand }}</td>
                                             <td>
                                                 <!-- Edit Button -->
-                                                <a href="{{ route('admin.documents-sections.edit', $document->id) }}" class="btn btn-success btn-sm">Edit</a>
+                                                <a href="{{ route('admin.documents-sections.edit', $document->id) }}"
+                                                    class="btn btn-success btn-sm">Edit</a>
 
                                                 <!-- Delete Button (Form Approach) -->
                                                 <form

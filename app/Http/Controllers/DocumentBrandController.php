@@ -34,11 +34,11 @@ class DocumentBrandController extends Controller
         return redirect()->route('admin.document-brands.index')->with('success', 'Document Brand saved successfully.');
     }
 
-    public function fetchDocumentBrands()
-    {
-        $documentBrands = DocumentBrand::all();
-        return response()->json(['documentBrands' => $documentBrands]);
-    }
+    // public function fetchDocumentBrands()
+    // {
+    //     $documentBrands = DocumentBrand::all();
+    //     return response()->json(['documentBrands' => $documentBrands]);
+    // }
 
     // ...existing code...
 }

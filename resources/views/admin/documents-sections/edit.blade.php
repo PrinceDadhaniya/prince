@@ -66,10 +66,24 @@
                     @endforeach
                 </select>
                 <label for="documents" class="form-label mt-2">Document File</label>
-                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx" required>
+                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx">
                 @error('documents')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
+
+                @if ($document->file_path)
+                    <div class="mt-3">
+                        <label class="form-label">Uploaded Document:</label>
+                        <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" class="d-block text-primary">
+                            View Document
+                        </a>
+                    </div>
+                @else
+                    <div class="mt-3 text-danger">
+                        <label class="form-label">Uploaded Document:</label>
+                        <span>Document not found.</span>
+                    </div>
+                @endif
             </div>
 
             <div class="form-group mb-3">

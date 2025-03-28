@@ -45,7 +45,7 @@
             <?php
                 $documentsSections = $documentsSections ?? null;
                 $documentCategories = $documentCategories ?? [];
-                $documentBrands = $documentBrands ?? []; // Ensure $documentBrands is defined
+                $documentBrands = $documentBrands ?? [];
             ?>
             <h5 class="mb-0"><?php echo e($documentsSections ? 'Create Documents Sections' : 'Edit Documents Sections'); ?>
 

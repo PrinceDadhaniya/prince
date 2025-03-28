@@ -17,6 +17,7 @@ class DocumentsSectionsController extends Controller
     {
         $documents = DocumentsSection::with('category', 'brand')->get();
         return view('admin.documents-sections.index', compact('documents'));
+
     }
 
     public function create()
@@ -25,7 +26,7 @@ class DocumentsSectionsController extends Controller
         $brands = Brand::all();
         $documentTypes = DocumentType::all();
         $documentCategories = DocumentCategory::all();
-        $documentBrands = DocumentBrand::all(); // Fetch document brands
+        $documentBrands = DocumentBrand::all();
 
         return view('admin.documents-sections.create', compact('categories', 'brands', 'documentTypes', 'documentCategories', 'documentBrands'));
     }
@@ -39,7 +40,7 @@ class DocumentsSectionsController extends Controller
             'document_brand' => 'required|string',
             'description' => 'nullable|string',
             'file_path' => 'required|string',
-            'documents' => 'required|file|mimes:pdf,doc,docx', // Ensure this rule is correct
+            'documents' => 'required|file|mimes:pdf,doc,docx',
         ]);
 
         // Handle file upload
@@ -56,8 +57,8 @@ class DocumentsSectionsController extends Controller
             'document_brand'     => $request->document_brand,
             'description'    => $request->description,
             'file_path'      => $filePath ?? $request->file_path,
-            'documents'      => $filename, // Ensure documents field is set
-            'document_file'  => $filename, // Include document_file in creation
+            'documents'      => $filename,
+            'document_file'  => $filename,
         ]);
 
         return redirect()->route('admin.documents-sections.index')->with('success', 'Document created successfully.');
@@ -81,7 +82,7 @@ class DocumentsSectionsController extends Controller
             'document_type' => 'required|string|max:255',
             'description' => 'nullable|string',
             'file_path' => 'required|string|max:255',
-            'documents' => 'required|string|max:255', // Add validation for documents
+            'documents' => 'required|string|max:255',
         ]);
 
         $document = DocumentsSection::findOrFail($id);

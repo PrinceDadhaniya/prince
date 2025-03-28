@@ -65,7 +65,7 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
                 <label for="documents" class="form-label mt-2">Document File</label>
-                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx" required>
+                <input type="file" name="documents" class="form-control" accept=".pdf,.doc,.docx">
                 <?php $__errorArgs = ['documents'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -76,6 +76,20 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
+                <?php if($document->file_path): ?>
+                    <div class="mt-3">
+                        <label class="form-label">Uploaded Document:</label>
+                        <a href="<?php echo e(asset('storage/' . $document->file_path)); ?>" target="_blank" class="d-block text-primary">
+                            View Document
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <div class="mt-3 text-danger">
+                        <label class="form-label">Uploaded Document:</label>
+                        <span>Document not found.</span>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group mb-3">

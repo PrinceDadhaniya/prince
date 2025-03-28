@@ -187,4 +187,10 @@ class DocumentBrandController extends Controller
         $documentBrand->delete();
         return redirect()->route('admin.document-brands.index')->with('message', 'Document Brand deleted successfully.');
     }
+
+    public function fetchDocumentBrands()
+    {
+        $documentBrands = DocumentBrand::all();
+        return response()->json(['documentBrands' => $documentBrands]);
+    }
 }

@@ -10,23 +10,23 @@ class DocumentsSection extends Model
     use HasFactory;
 
     protected $fillable = [
-        'document_name', // New field
-        'document_type', // New field
+        'document_name',
+        'document_type',
         'document_category',
         'document_brand',
         'description',
         'file_path',
-        'documents', // New field
+        'documents',
     ];
 
     public static function rules()
     {
         return [
-            'document_name' => 'required|string|max:255', // New validation rule
-            'document_type' => 'required|string|max:255', // New validation rule
-            'document_category' => 'required|string|max:255', // New validation rule
-            'document_brand' => 'required|string|max:255', // New validation rule
-            'document_file' => 'required', // New validation rule
+            'document_name' => 'required|string|max:255',
+            'document_type' => 'required|string|max:255',
+            'document_category' => 'required|string|max:255',
+            'document_brand' => 'required|string|max:255',
+            'document_file' => 'required',
             'documents' => 'required|file|mimes:pdf,doc,docx',
         ];
     }
@@ -34,11 +34,11 @@ class DocumentsSection extends Model
     public static function messages()
     {
         return [
-            'document_name.required' => 'The document name field is required.', // New error message
-            'document_type.required' => 'The document type field is required.', // New error message
-            'document_category.required' => 'The document category field is required.', // New error message
-            'document_brand.required' => 'The document type brand is required.', // New error message
-            'document_file.required' => 'The document file field is required.', // New error message
+            'document_name.required' => 'The document name field is required.',
+            'document_type.required' => 'The document type field is required.',
+            'document_category.required' => 'The document category field is required.',
+            'document_brand.required' => 'The document type brand is required.',
+            'document_file.required' => 'The document file field is required.',
         ];
     }
 

@@ -12,4 +12,10 @@ class DocumentCategoryController extends Controller
         $categories = DocumentCategory::all();
         return view('admin.document-category.index', compact('categories'));
     }
+
+    // public function fetchDocumentCategories()
+    // {
+    //     $documentCategories = DocumentCategory::all();
+    //     return response()->json(['documentCategories' => $documentCategories]);
+    // }
 }

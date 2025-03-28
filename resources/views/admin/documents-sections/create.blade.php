@@ -46,7 +46,7 @@
             @php
                 $documentsSections = $documentsSections ?? null;
                 $documentCategories = $documentCategories ?? [];
-                $documentBrands = $documentBrands ?? []; // Ensure $documentBrands is defined
+                $documentBrands = $documentBrands ?? [];
             @endphp
             <h5 class="mb-0">{{ $documentsSections ? 'Create Documents Sections' : 'Edit Documents Sections' }}
                 <a href="{{ url('admin/documents-sections') }}" class="btn btn-danger btn-sm text-white float-end">Back</a>
